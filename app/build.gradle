@@ -18,13 +18,15 @@ android {
         }
     }
     lintOptions {
-      abortOnError false
+        abortOnError false
     }
+    sourceSets { main { java.srcDirs = ['src/main/groovy'] } }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.0'
-    compile 'org.codehaus.groovy:groovy:2.4.0:grooid'
 }
+
+apply plugin: 'groovyx.grooid.groovy-android'

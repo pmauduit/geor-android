@@ -1,6 +1,8 @@
 package app.georchestra.beneth.fr.georchestra
 
+import android.os.AsyncTask
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.ArrayAdapter
@@ -14,21 +16,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        ListView sv = (ListView) this.findViewById(R.id.wxsServersListView)
-
-        String[] arr = new String[10];
-
-        for (int i = 0 ; i < 10 ; ++i) {
-           arr[i] = "Current elem " + i;
-        }
+        ListView lv = (ListView) this.findViewById(R.id.wxsServersListView)
         try {
-            def blah = Instance.loadGeorchestraInstances()
-            arr = toArray(blah.findAll { it.title != "" })
+            def task = new RetrieveGeorInstancesTask(this)
+            task.execute()
         } catch (Throwable e) {
             Log.e("MainActivity", Log.getStackTraceString(e))
         }
-        def aa = new ArrayAdapter(this, android.R.layout.simple_list_item_1, arr)
-        sv.setAdapter(aa)
+
     }
 }
+

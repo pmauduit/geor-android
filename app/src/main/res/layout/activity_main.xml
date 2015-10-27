@@ -15,31 +15,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="WxS servers"
+            android:text="Instances"
             android:id="@+id/textView"
             android:layout_row="0"
             android:layout_column="0" />
 
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="109dp"
+            android:layout_height="match_parent"
             android:id="@+id/wxsServersListView"
             android:layout_row="1"
             android:layout_column="0" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Catalogue"
-            android:id="@+id/textView2"
-            android:layout_row="2"
-            android:layout_column="0" />
-
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="109dp"
-            android:id="@+id/catalogueListView"
-            android:layout_row="3"
-            android:layout_column="0" />
     </GridLayout>
 </RelativeLayout>

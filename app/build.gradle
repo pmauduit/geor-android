@@ -23,6 +23,11 @@ android {
     }
     sourceSets { main { java.srcDirs = ['src/main/groovy'] } }
 }
+repositories {
+  maven {
+      url 'http://download.qualitystreetmap.org/maven/'
+  }
+}
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -31,6 +36,9 @@ dependencies {
     compile 'org.codehaus.groovy:groovy:2.4.3:grooid'
     compile('org.codehaus.groovy:groovy-xml:2.4.3') {
       exclude group: 'org.codehaus.groovy', module: 'groovy'
+    }
+    compile('fr.beneth:wxslib:1.0') {
+      exclude group: 'org.codehaus.groovy', module: 'groovy-all'
     }
 
 }

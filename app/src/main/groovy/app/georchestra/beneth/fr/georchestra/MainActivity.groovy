@@ -1,10 +1,13 @@
 package app.georchestra.beneth.fr.georchestra
 
+import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
@@ -12,17 +15,30 @@ import fr.beneth.wxslib.georchestra.Instance
 
 public class MainActivity extends AppCompatActivity {
 
+    RetrieveGeorInstancesTask georInstancesTask = new RetrieveGeorInstancesTask(this)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ListView lv = (ListView) this.findViewById(R.id.wxsServersListView)
-        try {
-            def task = new RetrieveGeorInstancesTask(this)
-            task.execute()
-        } catch (Throwable e) {
-            Log.e("MainActivity", Log.getStackTraceString(e))
-        }
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (georInstancesTask.geOrInstances == null) return
+                Instance i = georInstancesTask.geOrInstances.get(position)
+                Intent georInstanceIntent = new Intent(getApplicationContext(), InstanceActivity.class)
+
+                georInstanceIntent.putExtra("GeorInstance.title", i.title)
+                georInstanceIntent.putExtra("GeorInstance.url", i.url)
+                georInstanceIntent.putExtra("GeorInstance.logo_url", i.logo_url)
+
+                startActivity(georInstanceIntent)
+            }
+        })
+
+        georInstancesTask.execute()
 
     }
 }

@@ -44,12 +44,11 @@ class RetrieveGeorInstancesTask extends AsyncTask<Object, Void, Object> {
         def aa = new ArrayAdapter(activity, android.R.layout.simple_list_item_2, android.R.id.text1, geOrInstances) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
-                def georInstances = GeorInstanceHolder.getInstance().getGeorInstances()
                 View view = super.getView(position, convertView, parent);
                 TextView text1 = (TextView) view.findViewById(android.R.id.text1);
                 TextView text2 = (TextView) view.findViewById(android.R.id.text2);
-                text1.setText(georInstances.get(position).title);
-                text2.setText(georInstances.get(position).url);
+                text1.setText(geOrInstances.get(position).title);
+                text2.setText(geOrInstances.get(position).url);
                 return view;
             }
         }

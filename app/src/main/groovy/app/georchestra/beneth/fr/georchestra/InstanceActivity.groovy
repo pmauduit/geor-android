@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -13,13 +14,16 @@ import org.codehaus.groovy.util.StringUtil;
 
 public class InstanceActivity extends AppCompatActivity {
 
+    private int georInstanceId
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_instance);
         Bundle extras = getIntent().getExtras()
-        int pos = extras.getInt("GeorInstance.id")
-        Instance currentInst = GeorInstanceHolder.getInstance().getGeorInstances().get(pos)
+
+        georInstanceId = extras.getInt("GeorInstance.id")
+        Instance currentInst = GeorInstanceHolder.getInstance().getGeorInstances().get(georInstanceId)
 
         this.setTitle(currentInst.title)
         if (currentInst.logo_url) {
@@ -32,9 +36,9 @@ public class InstanceActivity extends AppCompatActivity {
         this.findViewById(R.id.gsButton).setOnClickListener(new View.OnClickListener() {
             @Override
             void onClick(View v) {
-                Intent gsActivity = new Intent(getApplicationContext(), gsActivity.class)
-                gsActivity.putExtra("GeorInstance.id", pos)
-                startActivity(gsActivity)
+                Intent gsActivity = new Intent(getApplicationContext(), GeoserverActivity.class)
+                gsActivity.putExtra("GeorInstance.id", georInstanceId)
+                startActivityForResult(gsActivity, RESULT_OK)
             }
         })
         // Hook for GeoNetwork button
@@ -53,5 +57,14 @@ public class InstanceActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG).show();
             }
         })
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

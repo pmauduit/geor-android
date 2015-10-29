@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
                 Instance i = georInstances.get(position)
                 Intent georInstanceIntent = new Intent(getApplicationContext(), InstanceActivity.class)
                 georInstanceIntent.putExtra("GeorInstance.id", position)
-                startActivity(georInstanceIntent)
+                startActivityForResult(georInstanceIntent, RESULT_OK)
             }
         })
         Toast.makeText(getApplicationContext(), "Loading geOrchestra instances list",

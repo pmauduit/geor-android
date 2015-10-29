@@ -18,13 +18,14 @@ public class InstanceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_instance);
         Bundle extras = getIntent().getExtras()
-        String title = extras.getString("GeorInstance.title")
-        String logoUrl = extras.getString("GeorInstance.logo_url")
-        this.setTitle(title)
-        if (logoUrl) {
+        int pos = extras.getInt("GeorInstance.id")
+        Instance currentInst = GeorInstanceHolder.getInstance().getGeorInstances().get(pos)
+
+        this.setTitle(currentInst.title)
+        if (currentInst.logo_url) {
             ImageView logoView = this.findViewById(R.id.LogoView)
             def rit = new RetrieveImageTask(logoView)
-            rit.execute(logoUrl)
+            rit.execute(currentInst.logo_url)
         }
     }
 }

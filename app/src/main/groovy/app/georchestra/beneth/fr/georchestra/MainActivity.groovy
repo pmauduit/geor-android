@@ -26,20 +26,16 @@ public class MainActivity extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (georInstancesTask.geOrInstances == null) return
-                Instance i = georInstancesTask.geOrInstances.get(position)
+                def georInstances = GeorInstanceHolder.getInstance().getGeorInstances()
+                if (georInstances == null)
+                    return
+                Instance i = georInstances.get(position)
                 Intent georInstanceIntent = new Intent(getApplicationContext(), InstanceActivity.class)
-
-                georInstanceIntent.putExtra("GeorInstance.title", i.title)
-                georInstanceIntent.putExtra("GeorInstance.url", i.url)
-                georInstanceIntent.putExtra("GeorInstance.logo_url", i.logo_url)
-
+                georInstanceIntent.putExtra("GeorInstance.id", position)
                 startActivity(georInstanceIntent)
             }
         })
-
         georInstancesTask.execute()
-
     }
 }
 

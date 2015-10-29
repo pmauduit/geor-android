@@ -7,7 +7,8 @@ import android.view.View
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView
-import android.widget.TextView;
+import android.widget.TextView
+import android.widget.Toast;
 import fr.beneth.wxslib.georchestra.Instance;
 
 class RetrieveGeorInstancesTask extends AsyncTask<Object, Void, Object> {
@@ -53,6 +54,8 @@ class RetrieveGeorInstancesTask extends AsyncTask<Object, Void, Object> {
             }
         }
         lv.setAdapter(aa)
+        Toast.makeText(activity.getApplicationContext(), "Done.",
+                Toast.LENGTH_SHORT).show();
         return
     }
 }

@@ -11,6 +11,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
+import android.widget.Toast
 import fr.beneth.wxslib.georchestra.Instance
 
 public class MainActivity extends AppCompatActivity {
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(georInstanceIntent)
             }
         })
+        Toast.makeText(getApplicationContext(), "Loading geOrchestra instances list",
+                Toast.LENGTH_SHORT).show();
         georInstancesTask.execute()
     }
 }

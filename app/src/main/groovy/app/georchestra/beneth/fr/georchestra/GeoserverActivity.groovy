@@ -17,7 +17,7 @@ import fr.beneth.wxslib.operations.Capabilities;
 
 public class GeoserverActivity extends AppCompatActivity {
 
-    List<Layer> currentLayersList
+    List<Layer> currentLayersList = null
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,7 @@ public class GeoserverActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras()
         int georInstanceId = extras.getInt("GeorInstance.id")
         Instance ist = GeorInstanceHolder.getInstance().getGeorInstances().get(georInstanceId)
-        Capabilities wmsCap = WmsCapabilitiesHolder.getInstance().getWmpsCapabilities()
+        Capabilities wmsCap = WmsCapabilitiesHolder.getInstance().getWmsCapabilities()
         def gsUrl = ist.url -~ /mapfishapp\// + "geoserver/wms?service=wms&request=getcapabilities"
 
         ListView lv = (ListView) this.findViewById(R.id.LayersList)
@@ -47,6 +47,7 @@ public class GeoserverActivity extends AppCompatActivity {
         currentLayersList = layers
         ListView lv = (ListView) this.findViewById(R.id.LayersList)
 
+
         def aa = new ArrayAdapter(this, android.R.layout.simple_list_item_2,
                 android.R.id.text1, layers) {
             @Override
@@ -54,7 +55,9 @@ public class GeoserverActivity extends AppCompatActivity {
                 View view = super.getView(position, convertView, parent);
                 TextView text1 = (TextView) view.findViewById(android.R.id.text1);
                 TextView text2 = (TextView) view.findViewById(android.R.id.text2);
-                text1.setText(layers.get(position).name);
+                text1.setText(layers.get(position).name ?
+                        layers.get(position).name :
+                        layers.get(position).title);
                 text2.setText(layers.get(position).title);
                 return view;
             }
@@ -67,7 +70,25 @@ public class GeoserverActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                this.finish();
+                // handles the "arrow left" pressed event:
+                // if there are parent layers, we need to
+                // update the layers list
+
+                // No list or no parent above, finishes the activity
+                if (currentLayersList == null
+                        || currentLayersList.size() == 0
+                        || currentLayersList.get(0).parentLayer == null) {
+                    this.finish()
+                    return true
+                }
+                def layerParent = currentLayersList.get(0).parentLayer
+                // if we have reached the root of layers
+                if (layerParent.parentLayer == null) {
+                    refreshLayersList(WmsCapabilitiesHolder.getInstance().getWmsCapabilities().layers)
+                } else {
+                    // else get backwards in the layers list
+                    refreshLayersList(layerParent.parentLayer.layers)
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);

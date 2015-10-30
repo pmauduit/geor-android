@@ -12,7 +12,7 @@ public class WmsCapabilitiesHolder {
         wmsCapabilities = cap
     }
 
-    public Capabilities getWmpsCapabilities() {
+    public Capabilities getWmsCapabilities() {
         return wmsCapabilities
     }
 

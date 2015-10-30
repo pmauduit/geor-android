@@ -14,10 +14,10 @@ public class RetrieveWmsTask extends AsyncTask<Object, Void, Object> {
 
     private error = null
 
-    private Activity activity
+    private GeoserverActivity activity
 
 
-    public RetrieveWmsTask(Activity activity) {
+    public RetrieveWmsTask(GeoserverActivity activity) {
         this.activity = activity
     }
 
@@ -41,6 +41,8 @@ public class RetrieveWmsTask extends AsyncTask<Object, Void, Object> {
             return
         }
         def wmsCap = (Capabilities) result
+        activity.currentLayersList = wmsCap.layers
+
         ListView lv = (ListView) activity.findViewById(R.id.LayersList)
         def aa = new ArrayAdapter(activity, android.R.layout.simple_list_item_2,
                 android.R.id.text1, wmsCap) {
@@ -49,7 +51,9 @@ public class RetrieveWmsTask extends AsyncTask<Object, Void, Object> {
                 View view = super.getView(position, convertView, parent);
                 TextView text1 = (TextView) view.findViewById(android.R.id.text1);
                 TextView text2 = (TextView) view.findViewById(android.R.id.text2);
-                text1.setText(wmsCap.layers.get(position).name);
+                text1.setText(wmsCap.layers.get(position).name ?
+                        wmsCap.layers.get(position).name :
+                        wmsCap.layers.get(position).title);
                 text2.setText(wmsCap.layers.get(position).title);
                 return view;
             }

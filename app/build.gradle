@@ -37,8 +37,8 @@ dependencies {
     compile('org.codehaus.groovy:groovy-xml:2.4.3') {
       exclude group: 'org.codehaus.groovy', module: 'groovy'
     }
-    compile('fr.beneth:wxslib:1.0') {
-      exclude group: 'org.codehaus.groovy', module: 'groovy-all'
+    compile('fr.beneth:wxslib:1.1-SNAPSHOT') {
+      exclude group: 'org.codehaus.groovy', module: 'groovy-xml'
     }
 
 }

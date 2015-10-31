@@ -1,16 +1,14 @@
 package app.georchestra.beneth.fr.georchestra.tasks
 
-import android.app.Activity
 import android.os.AsyncTask
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
-import app.georchestra.beneth.fr.georchestra.GeoserverActivity
+import app.georchestra.beneth.fr.georchestra.activities.GeoserverActivity
 import app.georchestra.beneth.fr.georchestra.R
-import app.georchestra.beneth.fr.georchestra.WmsCapabilitiesHolder
+import app.georchestra.beneth.fr.georchestra.holders.WmsCapabilitiesHolder
 import fr.beneth.wxslib.operations.Capabilities
 
 public class RetrieveWmsTask extends AsyncTask<Object, Void, Object> {

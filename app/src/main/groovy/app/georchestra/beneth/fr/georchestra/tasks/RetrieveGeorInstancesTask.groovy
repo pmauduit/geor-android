@@ -1,7 +1,5 @@
 package app.georchestra.beneth.fr.georchestra.tasks
 
-import android.app.ProgressDialog
-import android.content.Context;
 import android.os.AsyncTask
 import android.view.View
 import android.view.ViewGroup;
@@ -9,8 +7,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
-import app.georchestra.beneth.fr.georchestra.GeorInstanceHolder
-import app.georchestra.beneth.fr.georchestra.MainActivity
+import app.georchestra.beneth.fr.georchestra.holders.GeorInstanceHolder
+import app.georchestra.beneth.fr.georchestra.activities.MainActivity
 import app.georchestra.beneth.fr.georchestra.R;
 import fr.beneth.wxslib.georchestra.Instance;
 

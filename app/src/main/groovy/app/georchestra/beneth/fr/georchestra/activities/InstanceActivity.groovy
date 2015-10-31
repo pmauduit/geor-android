@@ -18,12 +18,13 @@ public class InstanceActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_instance);
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_instance)
         Bundle extras = getIntent().getExtras()
 
         georInstanceId = extras.getInt("GeorInstance.id")
-        Instance currentInst = GeorInstanceHolder.getInstance().getGeorInstances().get(georInstanceId)
+        Instance currentInst = GeorInstanceHolder.
+                getInstance().getGeorInstances().get(georInstanceId)
 
         this.setTitle(currentInst.title)
         if (currentInst.logo_url) {
@@ -45,16 +46,16 @@ public class InstanceActivity extends AppCompatActivity {
         this.findViewById(R.id.gnButton).setOnClickListener(new View.OnClickListener() {
             @Override
             void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "unimplemented",
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "not implemented yet !",
+                        Toast.LENGTH_LONG).show()
             }
         })
         // Hook for viewer button
         this.findViewById(R.id.viewerButton).setOnClickListener(new View.OnClickListener() {
             @Override
             void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "unimplemented",
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "not implemented yet !",
+                        Toast.LENGTH_LONG).show()
             }
         })
     }
@@ -62,9 +63,9 @@ public class InstanceActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                this.finish();
-                return true;
+                this.finish()
+                return true
         }
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item)
     }
 }

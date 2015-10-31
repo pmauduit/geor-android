@@ -42,6 +42,7 @@ public class GeoserverActivity extends AppCompatActivity {
         })
 
         def wmsTask = new RetrieveWmsTask(this)
+        this.findViewById(R.id.ProgressBar).setVisibility(View.VISIBLE)
         wmsTask.execute(gsUrl)
     }
 
@@ -54,14 +55,14 @@ public class GeoserverActivity extends AppCompatActivity {
                 android.R.id.text1, layers) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
-                TextView text1 = (TextView) view.findViewById(android.R.id.text1);
-                TextView text2 = (TextView) view.findViewById(android.R.id.text2);
+                View view = super.getView(position, convertView, parent)
+                TextView text1 = (TextView) view.findViewById(android.R.id.text1)
+                TextView text2 = (TextView) view.findViewById(android.R.id.text2)
                 text1.setText(layers.get(position).name ?
                         layers.get(position).name :
-                        layers.get(position).title);
-                text2.setText(layers.get(position).title);
-                return view;
+                        layers.get(position).title)
+                text2.setText(layers.get(position).title)
+                return view
             }
         }
         lv.setAdapter(aa)
@@ -86,13 +87,14 @@ public class GeoserverActivity extends AppCompatActivity {
                 def layerParent = currentLayersList.get(0).parentLayer
                 // if we have reached the root of layers
                 if (layerParent.parentLayer == null) {
-                    refreshLayersList(WmsCapabilitiesHolder.getInstance().getWmsCapabilities().layers)
+                    refreshLayersList(WmsCapabilitiesHolder.
+                            getInstance().getWmsCapabilities().layers)
                 } else {
                     // else get backwards in the layers list
                     refreshLayersList(layerParent.parentLayer.layers)
                 }
-                return true;
+                return true
         }
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item)
     }
 }

@@ -34,8 +34,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(georInstanceIntent, RESULT_OK)
             }
         })
-        Toast.makeText(getApplicationContext(), "Loading geOrchestra instances list",
-                Toast.LENGTH_SHORT).show();
+        this.findViewById(R.id.ProgressBar).setVisibility(View.VISIBLE)
         georInstancesTask.execute()
     }
 }

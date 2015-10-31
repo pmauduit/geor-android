@@ -1,17 +1,15 @@
-package app.georchestra.beneth.fr.georchestra
+package app.georchestra.beneth.fr.georchestra.activities
 
 import android.content.Intent
-import android.os.AsyncTask
 import android.os.Bundle
-import android.os.Handler
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.ListView
-import android.widget.TextView
 import android.widget.Toast
+import app.georchestra.beneth.fr.georchestra.R
+import app.georchestra.beneth.fr.georchestra.holders.GeorInstanceHolder
+import app.georchestra.beneth.fr.georchestra.tasks.RetrieveGeorInstancesTask
 import fr.beneth.wxslib.georchestra.Instance
 
 public class MainActivity extends AppCompatActivity {

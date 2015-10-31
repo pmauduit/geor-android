@@ -1,16 +1,16 @@
-package app.georchestra.beneth.fr.georchestra;
+package app.georchestra.beneth.fr.georchestra.activities
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
+import app.georchestra.beneth.fr.georchestra.R
+import app.georchestra.beneth.fr.georchestra.holders.GeorInstanceHolder
+import app.georchestra.beneth.fr.georchestra.tasks.RetrieveImageTask
 import fr.beneth.wxslib.georchestra.Instance
-import org.codehaus.groovy.util.StringUtil;
 
 public class InstanceActivity extends AppCompatActivity {
 

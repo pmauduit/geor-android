@@ -1,4 +1,4 @@
-package app.georchestra.beneth.fr.georchestra
+package app.georchestra.beneth.fr.georchestra.tasks
 
 import android.app.ProgressDialog
 import android.content.Context;
@@ -8,7 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView
 import android.widget.TextView
-import android.widget.Toast;
+import android.widget.Toast
+import app.georchestra.beneth.fr.georchestra.GeorInstanceHolder
+import app.georchestra.beneth.fr.georchestra.MainActivity
+import app.georchestra.beneth.fr.georchestra.R;
 import fr.beneth.wxslib.georchestra.Instance;
 
 class RetrieveGeorInstancesTask extends AsyncTask<Object, Void, Object> {

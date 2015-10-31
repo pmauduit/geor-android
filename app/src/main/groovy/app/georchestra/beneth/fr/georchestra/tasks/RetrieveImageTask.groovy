@@ -1,12 +1,10 @@
-package app.georchestra.beneth.fr.georchestra;
+package app.georchestra.beneth.fr.georchestra.tasks;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ImageView;
-
-import java.io.InputStream;
+import android.widget.ImageView
 
 /**
  * Created by pmauduit on 10/28/15.

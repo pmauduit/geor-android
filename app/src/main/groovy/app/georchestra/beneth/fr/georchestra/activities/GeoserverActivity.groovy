@@ -1,7 +1,5 @@
-package app.georchestra.beneth.fr.georchestra
+package app.georchestra.beneth.fr.georchestra.activities
 
-import android.app.Activity
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle
 import android.view.MenuItem
@@ -11,6 +9,10 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
+import app.georchestra.beneth.fr.georchestra.R
+import app.georchestra.beneth.fr.georchestra.holders.GeorInstanceHolder
+import app.georchestra.beneth.fr.georchestra.holders.WmsCapabilitiesHolder
+import app.georchestra.beneth.fr.georchestra.tasks.RetrieveWmsTask
 import fr.beneth.wxslib.Layer
 import fr.beneth.wxslib.georchestra.Instance
 import fr.beneth.wxslib.operations.Capabilities;

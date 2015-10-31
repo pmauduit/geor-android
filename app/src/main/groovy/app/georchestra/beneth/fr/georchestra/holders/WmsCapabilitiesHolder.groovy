@@ -1,4 +1,4 @@
-package app.georchestra.beneth.fr.georchestra
+package app.georchestra.beneth.fr.georchestra.holders
 
 import fr.beneth.wxslib.operations.Capabilities;
 

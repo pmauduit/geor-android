@@ -1,5 +1,7 @@
 package app.georchestra.beneth.fr.georchestra.activities
 
+import android.R
+import android.graphics.Color
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle
 import android.view.MenuItem
@@ -29,7 +31,8 @@ public class GeoserverActivity extends AppCompatActivity {
         int georInstanceId = extras.getInt("GeorInstance.id")
         Instance ist = GeorInstanceHolder.getInstance().getGeorInstances().get(georInstanceId)
         Capabilities wmsCap = WmsCapabilitiesHolder.getInstance().getWmsCapabilities()
-        def gsUrl = ist.url -~ /mapfishapp\// + "geoserver/wms?service=wms&request=getcapabilities"
+        def gsUrl = "${ist.url}geoserver/wms?service=wms&request=getcapabilities"
+        gsUrl = gsUrl -~ /(mapfishapp|carto)\//
 
         ListView lv = (ListView) this.findViewById(R.id.LayersList)
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -46,7 +49,7 @@ public class GeoserverActivity extends AppCompatActivity {
         wmsTask.execute(gsUrl)
     }
 
-    private void refreshLayersList(ArrayList<Layer> layers) {
+    public void refreshLayersList(ArrayList<Layer> layers) {
         currentLayersList = layers
         ListView lv = (ListView) this.findViewById(R.id.LayersList)
 
@@ -56,12 +59,15 @@ public class GeoserverActivity extends AppCompatActivity {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent)
+                Layer l = layers.get(position)
+                // Show layers with a mdUrl in green
+                if (l.metadataUrls.size() > 0) {
+                    view.setBackgroundResource(R.color.itemWithMd)
+                }
                 TextView text1 = (TextView) view.findViewById(android.R.id.text1)
                 TextView text2 = (TextView) view.findViewById(android.R.id.text2)
-                text1.setText(layers.get(position).name ?
-                        layers.get(position).name :
-                        layers.get(position).title)
-                text2.setText(layers.get(position).title)
+                text1.setText(l.name ? l.name : l.title)
+                text2.setText(l.title)
                 return view
             }
         }

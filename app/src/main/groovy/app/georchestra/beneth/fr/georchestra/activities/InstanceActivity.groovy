@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
+import android.webkit.WebView
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import app.georchestra.beneth.fr.georchestra.R
 import app.georchestra.beneth.fr.georchestra.holders.GeorInstanceHolder
@@ -14,7 +16,12 @@ import fr.beneth.wxslib.georchestra.Instance
 
 public class InstanceActivity extends AppCompatActivity {
 
-    private int georInstanceId
+    private String getInstanceDesc(Instance instance) {
+        return "instance title: ${instance.title}\r\n" +
+                "instance url: ${instance.url}\r\n" +
+                "in production: ${instance.isInProduction}\r\n" +
+                "is public: ${instance.isPublic}"
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +29,7 @@ public class InstanceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_instance)
         Bundle extras = getIntent().getExtras()
 
-        georInstanceId = extras.getInt("GeorInstance.id")
+        def georInstanceId = extras.getInt("GeorInstance.id")
         Instance currentInst = GeorInstanceHolder.
                 getInstance().getGeorInstances().get(georInstanceId)
 
@@ -32,6 +39,10 @@ public class InstanceActivity extends AppCompatActivity {
             def rit = new RetrieveImageTask(logoView)
             rit.execute(currentInst.logo_url)
         }
+
+        // Filling up the html desc of the instance
+        def wv = (TextView) this.findViewById(R.id.InstanceInfoView)
+        wv.setText(getInstanceDesc(currentInst))
 
         // Hook for GeoServer button
         this.findViewById(R.id.gsButton).setOnClickListener(new View.OnClickListener() {

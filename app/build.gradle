@@ -24,22 +24,23 @@ android {
     sourceSets { main { java.srcDirs = ['src/main/groovy'] } }
 }
 repositories {
-  maven {
-      url 'http://download.qualitystreetmap.org/maven/'
-  }
+    maven {
+        url 'http://download.qualitystreetmap.org/maven/'
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'org.codehaus.groovy:groovy:2.4.3:grooid'
     compile('org.codehaus.groovy:groovy-xml:2.4.3') {
-      exclude group: 'org.codehaus.groovy', module: 'groovy'
+        exclude group: 'org.codehaus.groovy', module: 'groovy'
     }
     compile('fr.beneth:wxslib:1.1-SNAPSHOT') {
-      exclude group: 'org.codehaus.groovy', module: 'groovy-xml'
+        exclude group: 'org.codehaus.groovy', module: 'groovy-xml'
     }
 
+    compile 'com.android.support:appcompat-v7:23.1.0'
+    compile 'com.android.support:design:23.1.0'
 }
 

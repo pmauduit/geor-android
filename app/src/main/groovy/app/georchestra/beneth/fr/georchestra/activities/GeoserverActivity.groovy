@@ -1,12 +1,9 @@
 package app.georchestra.beneth.fr.georchestra.activities
 
-import android.R
-import android.graphics.Color
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.support.v7.app.AppCompatActivity
+import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
@@ -17,18 +14,21 @@ import app.georchestra.beneth.fr.georchestra.holders.WmsCapabilitiesHolder
 import app.georchestra.beneth.fr.georchestra.tasks.RetrieveWmsTask
 import fr.beneth.wxslib.Layer
 import fr.beneth.wxslib.georchestra.Instance
-import fr.beneth.wxslib.operations.Capabilities;
+import fr.beneth.wxslib.operations.Capabilities
 
 public class GeoserverActivity extends AppCompatActivity {
 
     List<Layer> currentLayersList = null
+    final int MENU_LAYER_INFO = 0
+    final int MENU_METADATA = 1
+    int georInstanceId
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gs)
         Bundle extras = getIntent().getExtras()
-        int georInstanceId = extras.getInt("GeorInstance.id")
+        georInstanceId = extras.getInt("GeorInstance.id")
         Instance ist = GeorInstanceHolder.getInstance().getGeorInstances().get(georInstanceId)
         Capabilities wmsCap = WmsCapabilitiesHolder.getInstance().getWmsCapabilities()
         def gsUrl = "${ist.url}geoserver/wms?service=wms&request=getcapabilities"
@@ -53,7 +53,6 @@ public class GeoserverActivity extends AppCompatActivity {
         currentLayersList = layers
         ListView lv = (ListView) this.findViewById(R.id.LayersList)
 
-
         def aa = new ArrayAdapter(this, android.R.layout.simple_list_item_2,
                 android.R.id.text1, layers) {
             @Override
@@ -71,8 +70,45 @@ public class GeoserverActivity extends AppCompatActivity {
                 return view
             }
         }
+        registerForContextMenu(lv)
         lv.setAdapter(aa)
+    }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+
+        if (v.getId() == R.id.LayersList) {
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo
+            Layer l = currentLayersList.get(info.position)
+            menu.setHeaderTitle(l.title)
+            if (l.metadataUrls.size() > 0) {
+                menu.add(Menu.NONE, MENU_METADATA, MENU_METADATA, "Metadata")
+            }
+            menu.add(Menu.NONE, MENU_LAYER_INFO, MENU_LAYER_INFO, "Layer info")
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo()
+        int menuItemIndex = item.getItemId()
+        Layer l = currentLayersList.get(info.position)
+
+        if (menuItemIndex == MENU_METADATA) {
+            Intent mdIntent = new Intent(getApplicationContext(), MetadataActivity.class)
+            mdIntent.putExtra("GeorInstance.id", georInstanceId)
+            mdIntent.putExtra("GeorInstance.layer_name", l.name)
+
+            startActivityForResult(mdIntent, RESULT_OK)
+        } else if  (menuItemIndex == MENU_LAYER_INFO) {
+            Intent liIntent = new Intent(getApplicationContext(), LayerInfoActivity.class)
+            liIntent.putExtra("GeorInstance.layer_name", l.name)
+
+            startActivityForResult(liIntent, RESULT_OK)
+        }
+
+        return true;
     }
 
     @Override

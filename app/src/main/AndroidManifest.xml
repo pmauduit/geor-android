@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="app.georchestra.beneth.fr.georchestra" >
+    package="app.georchestra.beneth.fr.georchestra">
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-        <activity android:name=".activities.MainActivity" >
+        android:theme="@style/AppTheme">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -17,7 +19,7 @@
         <activity
             android:name=".activities.InstanceActivity"
             android:label="geOrchestra"
-            android:parentActivityName=".activities.MainActivity" >
+            android:parentActivityName=".activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
@@ -25,10 +27,25 @@
         <activity
             android:name=".activities.GeoserverActivity"
             android:label="GeoServer"
-            android:parentActivityName=".activities.InstanceActivity" >
+            android:parentActivityName=".activities.InstanceActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.InstanceActivity" />
         </activity>
+        <activity
+            android:name=".activities.MetadataActivity"
+            android:label="Layer Metadata"
+            android:parentActivityName=".activities.InstanceActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.InstanceActivity" />
+        </activity>
+        <activity android:name=".activities.LayerInfoActivity"
+            android:label="Layer Infos"
+            android:parentActivityName=".activities.InstanceActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.InstanceActivity" />></activity>
     </application>
+
 </manifest>

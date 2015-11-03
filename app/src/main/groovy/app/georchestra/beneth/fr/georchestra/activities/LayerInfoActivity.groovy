@@ -1,10 +1,16 @@
-package app.georchestra.beneth.fr.georchestra.activities;
+package app.georchestra.beneth.fr.georchestra.activities
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle
+import android.util.AttributeSet
 import android.view.MenuItem
+import android.widget.AbsoluteLayout
 import android.widget.CheckBox
+import android.widget.ImageView
+import android.widget.TableRow
 import android.widget.TextView
+import android.widget.Toast
 import app.georchestra.beneth.fr.georchestra.R
 import app.georchestra.beneth.fr.georchestra.holders.WmsCapabilitiesHolder
 import fr.beneth.wxslib.Layer;
@@ -21,8 +27,10 @@ public class LayerInfoActivity extends AppCompatActivity {
         def wmsCap = WmsCapabilitiesHolder.getInstance().getWmsCapabilities()
         Layer l = wmsCap.findLayerByName(layerName)
 
-        this.setTitle(l.getName())
-
+        if (l.name)
+            this.setTitle(l.name)
+        else
+            this.setTitle(l.title)
         TextView ltt = (TextView) this.findViewById(R.id.layerTitleText)
         TextView lat = (TextView) this.findViewById(R.id.layerAbstractText)
         TextView lattrt = (TextView) this.findViewById(R.id.layerAttributionText)
@@ -33,8 +41,23 @@ public class LayerInfoActivity extends AppCompatActivity {
 
         ltt.setText(l.title)
         lat.setText(l._abstract)
-        lattrt.setText("Attribution: ${l.attributionTitle}")
-        lkt.setText("Keywords: ${l.keywords.join(", ")}")
+        if (l.attributionTitle) {
+            lattrt.setText("Attribution: ${l.attributionTitle}")
+        } else {
+            lattrt.setText("")
+        }
+        if (l.keywords.size()) {
+            lkt.setText("Keywords: ${l.keywords.join(", ")}")
+        } else {
+            lkt.setText("")
+        }
+        if (l.styles.size()) {
+            def layersTitles = l.styles.collect { it.name }
+            lst.setText("Styles: ${layersTitles.join(", ")}")
+        }
+        else {
+            lst.setText("")
+        }
         qchk.setChecked(l.queryable)
         qopk.setChecked(l.opaque)
     }

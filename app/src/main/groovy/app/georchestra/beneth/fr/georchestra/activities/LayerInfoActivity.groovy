@@ -3,6 +3,7 @@ package app.georchestra.beneth.fr.georchestra.activities;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.CheckBox
 import android.widget.TextView
 import app.georchestra.beneth.fr.georchestra.R
 import app.georchestra.beneth.fr.georchestra.holders.WmsCapabilitiesHolder
@@ -20,34 +21,24 @@ public class LayerInfoActivity extends AppCompatActivity {
         def wmsCap = WmsCapabilitiesHolder.getInstance().getWmsCapabilities()
         Layer l = wmsCap.findLayerByName(layerName)
 
+        this.setTitle(l.getName())
 
-        TextView tv = (TextView) findViewById(R.id.LayerInfoView)
-        tv.setText(layerAsText(l))
+        TextView ltt = (TextView) this.findViewById(R.id.layerTitleText)
+        TextView lat = (TextView) this.findViewById(R.id.layerAbstractText)
+        TextView lattrt = (TextView) this.findViewById(R.id.layerAttributionText)
+        TextView lkt = (TextView) this.findViewById(R.id.layerKeywordsText)
+        TextView lst =  (TextView) this.findViewById(R.id.layerStylesText)
+        CheckBox qchk = (CheckBox) this.findViewById(R.id.layerQueryableCheck)
+        CheckBox qopk = (CheckBox) this.findViewById(R.id.layerOpaqueCheck)
+
+        ltt.setText(l.title)
+        lat.setText(l._abstract)
+        lattrt.setText("Attribution: ${l.attributionTitle}")
+        lkt.setText("Keywords: ${l.keywords.join(", ")}")
+        qchk.setChecked(l.queryable)
+        qopk.setChecked(l.opaque)
     }
 
-    private String layerAsText(Layer layer) {
-        def ret = "name: ${layer.name}\r\n" +
-                "title: ${layer.title}\r\n" +
-                "abstract: \r\n\r\n${layer._abstract}\r\n\r\n"
-        if (layer.attributionTitle)
-            ret += "attribution: \t${layer.attributionTitle}\r\n"
-        ret += "is opaque: \t${layer.opaque}\r\n" +
-                "is queryable: \t${layer.queryable}\r\n"
-        if (layer.keywords.size() > 0) {
-            ret += "keywords: \t${layer.keywords.join(",")}\r\n"
-        }
-        if (layer.styles.size() > 0) {
-            ret += "styles: \t${layer.styles.collect{ it.name }.join(",")}\r\n"
-        }
-        if (layer.layers.size() > 0) {
-            ret += "Children layers count (recursive): \t${layer.getLayersCount()}\r\n"
-        }
-        if (layer.metadataUrls.size() > 0) {
-            ret += "Metadadata urls:\r\n"
-            layer.metadataUrls.each {ret += "\t- ${it.url} - ${it.format}\r\n"}
-        }
-        ret
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

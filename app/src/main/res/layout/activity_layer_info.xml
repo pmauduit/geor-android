@@ -9,13 +9,132 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="app.georchestra.beneth.fr.georchestra.activities.LayerInfoActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/tableLayout"></TableLayout>
+
+    <TableRow
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/LayerInfoView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:textSize="@dimen/abc_text_size_medium_material" />
+        android:id="@+id/titleRow"
+        android:layout_alignParentTop="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Layer Title"
+            android:id="@+id/layerTitleText"  />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/titleRow"
+        android:id="@+id/abstractRow">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="this is the layer abstract\r\n\r\n takes a few lines\r\n"
+            android:id="@+id/layerAbstractText" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/abstractRow"
+        android:id="@+id/attributionRow">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Layer attribution"
+            android:id="@+id/layerAttributionText" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/attributionRow"
+        android:id="@+id/keywordsRow">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Keywords: a,b,c"
+            android:id="@+id/layerKeywordsText"
+            android:layout_marginTop="52dp"
+            android:textStyle="italic" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/keywordsRow"
+        android:id="@+id/stylesRow">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Style: blah,blih,blop"
+            android:id="@+id/layerStylesText"
+            android:textStyle="italic" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stylesRow"
+        android:id="@+id/checkboxesRow">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Queryable"
+            android:id="@+id/layerQueryableCheck"
+            android:checked="false"
+            android:enabled="false" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Opaque"
+            android:id="@+id/layerOpaqueCheck"
+            android:checked="false"
+            android:enabled="false" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/checkboxesRow"
+        android:id="@+id/OverviewRow"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Overview"
+            android:id="@+id/textView7" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/OverviewRow"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="357dp"
+            android:id="@+id/imageView3" />
+    </TableRow>
+
 </RelativeLayout>

@@ -1,19 +1,13 @@
 package app.georchestra.beneth.fr.georchestra.activities
 
-import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle
-import android.util.AttributeSet
+import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import android.widget.AbsoluteLayout
 import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.TableRow
 import android.widget.TextView
-import android.widget.Toast
 import app.georchestra.beneth.fr.georchestra.R
 import app.georchestra.beneth.fr.georchestra.holders.WmsCapabilitiesHolder
-import fr.beneth.wxslib.Layer;
+import fr.beneth.wxslib.Layer
 
 public class LayerInfoActivity extends AppCompatActivity {
 

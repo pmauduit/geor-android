@@ -60,7 +60,8 @@ public class LayerInfoActivity extends AppCompatActivity {
         qopk.setChecked(l.opaque)
 
         def capReqPng = wmsCap.capabilityRequests.find {
-            it.name.toLowerCase() == "getmap" && it.formats.contains("image/png")
+            it.name.toLowerCase() == "getmap" &&
+            it.formats.find { it.toLowerCase() ==  "image/png" } != null
         } != null
 
 

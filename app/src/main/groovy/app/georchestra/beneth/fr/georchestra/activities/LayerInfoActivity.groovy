@@ -1,10 +1,20 @@
 package app.georchestra.beneth.fr.georchestra.activities
 
+import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
+import android.support.design.widget.CollapsingToolbarLayout
 import android.support.v7.app.AppCompatActivity
+import android.util.AttributeSet
+import android.util.Log
 import android.view.MenuItem
+import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TableRow
 import android.widget.TextView
+import android.widget.Toast
 import app.georchestra.beneth.fr.georchestra.R
 import app.georchestra.beneth.fr.georchestra.holders.WmsCapabilitiesHolder
 import fr.beneth.wxslib.Layer
@@ -25,6 +35,7 @@ public class LayerInfoActivity extends AppCompatActivity {
             this.setTitle(l.name)
         else
             this.setTitle(l.title)
+
         TextView ltt = (TextView) this.findViewById(R.id.layerTitleText)
         TextView lat = (TextView) this.findViewById(R.id.layerAbstractText)
         TextView lattrt = (TextView) this.findViewById(R.id.layerAttributionText)
@@ -54,6 +65,28 @@ public class LayerInfoActivity extends AppCompatActivity {
         }
         qchk.setChecked(l.queryable)
         qopk.setChecked(l.opaque)
+
+        ImageView layerOverView
+        LinearLayout.LayoutParams owLayoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+        )
+
+        layerOverView = new ImageView(this) {
+            @Override
+            protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+                super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+                int width = getMeasuredWidth()
+                int height = getMeasuredHeight()
+                Toast.makeText(this.getContext(), "${width}x${height}",
+                        Toast.LENGTH_LONG).show()
+                Log.e("DBG", "${width}x${height}")
+            }
+        }
+        layerOverView.setLayoutParams(owLayoutParams)
+        TableRow overviewRow = (TableRow) findViewById(R.id.OverviewRow)
+        layerOverView.setBackgroundColor(Color.BLACK)
+        overviewRow.addView(layerOverView)
     }
 
 

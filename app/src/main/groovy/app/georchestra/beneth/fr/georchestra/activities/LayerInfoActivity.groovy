@@ -1,25 +1,18 @@
 package app.georchestra.beneth.fr.georchestra.activities
 
-import android.content.Context
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
-import android.support.design.widget.CollapsingToolbarLayout
+import android.os.Parcel
 import android.support.v7.app.AppCompatActivity
-import android.util.AttributeSet
-import android.util.Log
 import android.view.MenuItem
-import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TableRow
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import app.georchestra.beneth.fr.georchestra.R
 import app.georchestra.beneth.fr.georchestra.holders.WmsCapabilitiesHolder
 import fr.beneth.wxslib.Layer
 
 public class LayerInfoActivity extends AppCompatActivity {
+    int LAYER_TRESHOLD = 5
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,27 +59,43 @@ public class LayerInfoActivity extends AppCompatActivity {
         qchk.setChecked(l.queryable)
         qopk.setChecked(l.opaque)
 
-        ImageView layerOverView
-        LinearLayout.LayoutParams owLayoutParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT
-        )
+        def capReqPng = wmsCap.capabilityRequests.find {
+            it.name.toLowerCase() == "getmap" && it.formats.contains("image/png")
+        } != null
 
-        layerOverView = new ImageView(this) {
+
+
+        ImageView layerOverView = new ImageView(this) {
+            boolean loaded = false
             @Override
             protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
                 super.onMeasure(widthMeasureSpec, heightMeasureSpec)
                 int width = getMeasuredWidth()
                 int height = getMeasuredHeight()
-                Toast.makeText(this.getContext(), "${width}x${height}",
-                        Toast.LENGTH_LONG).show()
-                Log.e("DBG", "${width}x${height}")
+
+                if (capReqPng && l.getLayersCount() > LAYER_TRESHOLD && ! loaded) {
+                    loaded = true
+                    // http://sdi.georchestra.org                    -> instance URL needed
+                    // /geoserver/wms?                               -> hardcoded
+                    // LAYERS=pmauduit_test:armoires-fo              -> l.name
+                    // &FORMAT=image%2Fpng                           -> png || jpg
+                    // &SERVICE=WMS                                  -> hardcoded
+                    // &VERSION=1.1.1&                               -> hardcoded
+                    // REQUEST=GetMap&                               -> hardcoded
+                    // SRS=EPSG%3A4326&BBOX=5.8794184477356,45.556558165252,
+                    //                5.9788649672668,45.58826575119 -> getcapabilities (wxslib)
+                    // &WIDTH=1035                                   -> width
+                    // &HEIGHT=330                                   -> height
+                }
             }
         }
-        layerOverView.setLayoutParams(owLayoutParams)
-        TableRow overviewRow = (TableRow) findViewById(R.id.OverviewRow)
+        LinearLayout.LayoutParams owLayoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+        )
         layerOverView.setBackgroundColor(Color.BLACK)
-        overviewRow.addView(layerOverView)
+        LinearLayout owLayout = (LinearLayout) findViewById(R.id.ll2)
+        owLayout.addView(layerOverView, owLayoutParams)
     }
 
 

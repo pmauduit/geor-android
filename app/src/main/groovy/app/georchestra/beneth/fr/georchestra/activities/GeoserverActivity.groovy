@@ -23,6 +23,12 @@ public class GeoserverActivity extends AppCompatActivity {
     final int MENU_METADATA = 1
     int georInstanceId
 
+    public static String getGeoserverWmsUrl(String instanceUrl, String operation) {
+        def ret = "${instanceUrl}geoserver/wms?service=wms&request=${operation}"
+        ret = ret -~ /(mapfishapp|carto)\//
+        return ret
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState)
@@ -31,8 +37,7 @@ public class GeoserverActivity extends AppCompatActivity {
         georInstanceId = extras.getInt("GeorInstance.id")
         Instance ist = GeorInstanceHolder.getInstance().getGeorInstances().get(georInstanceId)
         Capabilities wmsCap = WmsCapabilitiesHolder.getInstance().getWmsCapabilities()
-        def gsUrl = "${ist.url}geoserver/wms?service=wms&request=getcapabilities"
-        gsUrl = gsUrl -~ /(mapfishapp|carto)\//
+        def gsUrl = GeoserverActivity.getGeoserverWmsUrl(ist.url, "getcapabilities")
 
         ListView lv = (ListView) this.findViewById(R.id.LayersList)
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -104,7 +109,7 @@ public class GeoserverActivity extends AppCompatActivity {
         } else if  (menuItemIndex == MENU_LAYER_INFO) {
             Intent liIntent = new Intent(getApplicationContext(), LayerInfoActivity.class)
             liIntent.putExtra("GeorInstance.layer_name", l.name)
-
+            liIntent.putExtra("GeorInstance.id", georInstanceId)
             startActivityForResult(liIntent, RESULT_OK)
         }
 

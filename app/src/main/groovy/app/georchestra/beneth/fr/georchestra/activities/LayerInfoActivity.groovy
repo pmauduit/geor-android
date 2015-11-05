@@ -8,11 +8,12 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.widget.*
 import app.georchestra.beneth.fr.georchestra.R
+import app.georchestra.beneth.fr.georchestra.holders.GeorInstanceHolder
 import app.georchestra.beneth.fr.georchestra.holders.WmsCapabilitiesHolder
+import app.georchestra.beneth.fr.georchestra.tasks.RetrieveImageTask
 import fr.beneth.wxslib.Layer
 
 public class LayerInfoActivity extends AppCompatActivity {
-    int LAYER_TRESHOLD = 5
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +22,8 @@ public class LayerInfoActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras()
         String layerName = extras.getString("GeorInstance.layer_name")
+        int instanceId = extras.getInt("GeorInstance.id")
+        def georInstance = GeorInstanceHolder.getInstance().getGeorInstances().get(instanceId)
         def wmsCap = WmsCapabilitiesHolder.getInstance().getWmsCapabilities()
         Layer l = wmsCap.findLayerByName(layerName)
 
@@ -59,12 +62,12 @@ public class LayerInfoActivity extends AppCompatActivity {
         qchk.setChecked(l.queryable)
         qopk.setChecked(l.opaque)
 
-        def capReqPng = wmsCap.capabilityRequests.find {
-            it.name.toLowerCase() == "getmap" &&
-            it.formats.find { it.toLowerCase() ==  "image/png" } != null
+        def getMapReq = wmsCap.capabilityRequests.find {
+            it.name.toLowerCase() == "getmap"
+        }
+        def capReqPng = getMapReq != null && getMapReq.formats.find {
+            it.toLowerCase() == "image/png"
         } != null
-
-
 
         ImageView layerOverView = new ImageView(this) {
             boolean loaded = false
@@ -74,7 +77,9 @@ public class LayerInfoActivity extends AppCompatActivity {
                 int width = getMeasuredWidth()
                 int height = getMeasuredHeight()
 
-                if (capReqPng && l.getLayersCount() > LAYER_TRESHOLD && ! loaded) {
+                boolean isLayerPreviewable = capReqPng && l.name && l.boundingBoxes.first()
+
+                if (isLayerPreviewable && ! loaded) {
                     loaded = true
                     // http://sdi.georchestra.org                    -> instance URL needed
                     // /geoserver/wms?                               -> hardcoded
@@ -87,6 +92,14 @@ public class LayerInfoActivity extends AppCompatActivity {
                     //                5.9788649672668,45.58826575119 -> getcapabilities (wxslib)
                     // &WIDTH=1035                                   -> width
                     // &HEIGHT=330                                   -> height
+                    def bb = l.boundingBoxes.find { it.crs.toUpperCase() == "EPSG:4326" }
+                    def url =  GeoserverActivity.getGeoserverWmsUrl(georInstance.url, "getmap")
+                    url += "&layers=${l.name}&format=image/png&srs=${bb.crs}" +
+                            "&BBOX=${bb.miny},${bb.minx},${bb.maxy},${bb.maxx}" +
+                            "&width=${height}&height=${width}"
+
+                    def rit = new RetrieveImageTask(this)
+                    rit.execute(url)
                 }
             }
         }
@@ -94,7 +107,6 @@ public class LayerInfoActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT
         )
-        layerOverView.setBackgroundColor(Color.BLACK)
         LinearLayout owLayout = (LinearLayout) findViewById(R.id.ll2)
         owLayout.addView(layerOverView, owLayoutParams)
     }

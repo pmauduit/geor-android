@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
 import android.webkit.WebView
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -15,13 +16,6 @@ import app.georchestra.beneth.fr.georchestra.tasks.RetrieveImageTask
 import fr.beneth.wxslib.georchestra.Instance
 
 public class InstanceActivity extends AppCompatActivity {
-
-    private String getInstanceDesc(Instance instance) {
-        return "instance title: ${instance.title}\r\n" +
-                "instance url: ${instance.url}\r\n" +
-                "in production: ${instance.isInProduction}\r\n" +
-                "is public: ${instance.isPublic}"
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +35,14 @@ public class InstanceActivity extends AppCompatActivity {
         }
 
         // Filling up the html desc of the instance
-        def wv = (TextView) this.findViewById(R.id.InstanceInfoView)
-        wv.setText(getInstanceDesc(currentInst))
+        def tv = (TextView) this.findViewById(R.id.titleText)
+        tv.setText(currentInst.title)
+        def uv = (TextView) this.findViewById(R.id.urlText)
+        uv.setText(currentInst.url)
+        def pcb = (CheckBox) this.findViewById(R.id.productionCheckBox)
+        pcb.setChecked(currentInst.isInProduction)
+        def pubcb = (CheckBox) this.findViewById(R.id.publicCheckBox)
+        pubcb.setChecked(currentInst.isPublic)
 
         // Hook for GeoServer button
         this.findViewById(R.id.gsButton).setOnClickListener(new View.OnClickListener() {

@@ -33,6 +33,8 @@ public class GeoserverActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gs)
+        setTitle("GeoServer Layers")
+
         Bundle extras = getIntent().getExtras()
         georInstanceId = extras.getInt("GeorInstance.id")
         Instance ist = GeorInstanceHolder.getInstance().getGeorInstances().get(georInstanceId)

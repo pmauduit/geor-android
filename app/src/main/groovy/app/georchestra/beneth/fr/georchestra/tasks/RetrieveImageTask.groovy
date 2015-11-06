@@ -9,6 +9,7 @@ import android.widget.ImageView
 public class RetrieveImageTask extends AsyncTask<Object, Void, Bitmap> {
     ImageView imageView
     Throwable error
+    Bitmap image
 
     public RetrieveImageTask(ImageView imageView) {
         this.imageView = imageView
@@ -17,15 +18,15 @@ public class RetrieveImageTask extends AsyncTask<Object, Void, Bitmap> {
     @Override
     protected Bitmap doInBackground(Object... urls) {
         String url = (String) urls[0]
-        Bitmap icon = null
+        image = null
         try {
             InputStream ins = new java.net.URL(url).openStream()
-            icon = BitmapFactory.decodeStream(ins)
+            image = BitmapFactory.decodeStream(ins)
         } catch (Throwable e) {
             Log.e(RetrieveImageTask.class.toString(), e.getMessage())
             error = e
         }
-        return icon
+        return image
     }
 
     @Override

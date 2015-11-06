@@ -1,5 +1,7 @@
 package app.georchestra.beneth.fr.georchestra.activities
 
+import android.content.res.Configuration
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -70,7 +72,8 @@ public class LayerInfoActivity extends AppCompatActivity {
         } != null
 
         ImageView layerOverView = new ImageView(this) {
-            boolean loaded = false
+            RetrieveImageTask ritPortrait = null, ritLandscape = null
+
             @Override
             protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
                 super.onMeasure(widthMeasureSpec, heightMeasureSpec)
@@ -78,9 +81,8 @@ public class LayerInfoActivity extends AppCompatActivity {
                 int height = getMeasuredHeight()
 
                 boolean isLayerPreviewable = capReqPng && l.name && l.boundingBoxes.first()
-
-                if (isLayerPreviewable && ! loaded) {
-                    loaded = true
+                def orient = this.getResources().getConfiguration().orientation
+                if (isLayerPreviewable) {
                     // http://sdi.georchestra.org                    -> instance URL needed
                     // /geoserver/wms?                               -> hardcoded
                     // LAYERS=pmauduit_test:armoires-fo              -> l.name
@@ -94,12 +96,30 @@ public class LayerInfoActivity extends AppCompatActivity {
                     // &HEIGHT=330                                   -> height
                     def bb = l.boundingBoxes.find { it.crs.toUpperCase() == "EPSG:4326" }
                     def url =  GeoserverActivity.getGeoserverWmsUrl(georInstance.url, "getmap")
-                    url += "&layers=${l.name}&format=image/png&srs=${bb.crs}" +
-                            "&BBOX=${bb.miny},${bb.minx},${bb.maxy},${bb.maxx}" +
-                            "&width=${height}&height=${width}"
+                    if (orient == Configuration.ORIENTATION_PORTRAIT) {
+                        url += "&layers=${l.name}&format=image/png&srs=${bb.crs}" +
+                                "&BBOX=${bb.miny},${bb.minx},${bb.maxy},${bb.maxx}" +
+                                "&width=${height}&height=${width}"
+                        if (! ritPortrait) {
+                            ritPortrait = new RetrieveImageTask(this)
+                            ritPortrait.execute(url)
+                        } else {
+                            if (ritPortrait.image)
+                                this.setImageBitmap(ritPortrait.image)
+                        }
+                    } else {
+                        url += "&layers=${l.name}&format=image/png&srs=${bb.crs}" +
+                                "&BBOX=${bb.miny},${bb.minx},${bb.maxy},${bb.maxx}" +
+                                "&width=${width}&height=${height}"
+                        if (! ritLandscape) {
+                            ritLandscape = new RetrieveImageTask(this)
+                            ritLandscape.execute(url)
+                        } else {
+                            if (ritLandscape.image)
+                                this.setImageBitmap(ritLandscape.image)
+                        }
+                    }
 
-                    def rit = new RetrieveImageTask(this)
-                    rit.execute(url)
                 }
             }
         }

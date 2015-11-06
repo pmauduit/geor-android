@@ -39,6 +39,8 @@ public class InstanceActivity extends AppCompatActivity {
         tv.setText(currentInst.title)
         def uv = (TextView) this.findViewById(R.id.urlText)
         uv.setText(currentInst.url)
+        //def av = (TextView) this.findViewById(R.id.abstractText)
+        //av.setText(currentInst.)
         def pcb = (CheckBox) this.findViewById(R.id.productionCheckBox)
         pcb.setChecked(currentInst.isInProduction)
         def pubcb = (CheckBox) this.findViewById(R.id.publicCheckBox)

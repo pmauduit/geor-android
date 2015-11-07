@@ -13,6 +13,7 @@ import app.georchestra.beneth.fr.georchestra.R
 import app.georchestra.beneth.fr.georchestra.holders.GeorInstanceHolder
 import app.georchestra.beneth.fr.georchestra.holders.WmsCapabilitiesHolder
 import app.georchestra.beneth.fr.georchestra.tasks.RetrieveImageTask
+import app.georchestra.beneth.fr.georchestra.utils.GsUtils
 import fr.beneth.wxslib.Layer
 
 public class LayerInfoActivity extends AppCompatActivity {
@@ -95,7 +96,9 @@ public class LayerInfoActivity extends AppCompatActivity {
                     // &WIDTH=1035                                   -> width
                     // &HEIGHT=330                                   -> height
                     def bb = l.boundingBoxes.find { it.crs.toUpperCase() == "EPSG:4326" }
-                    def url =  GeoserverActivity.getGeoserverWmsUrl(georInstance.url, "getmap")
+                    if (bb == null) return
+
+                    def url =  GsUtils.getGeoserverWmsUrl(georInstance.url, "getmap")
                     if (orient == Configuration.ORIENTATION_PORTRAIT) {
                         url += "&layers=${l.name}&format=image/png&srs=${bb.crs}" +
                                 "&BBOX=${bb.miny},${bb.minx},${bb.maxy},${bb.maxx}" +

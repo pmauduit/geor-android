@@ -12,6 +12,7 @@ import app.georchestra.beneth.fr.georchestra.R
 import app.georchestra.beneth.fr.georchestra.holders.GeorInstanceHolder
 import app.georchestra.beneth.fr.georchestra.holders.WmsCapabilitiesHolder
 import app.georchestra.beneth.fr.georchestra.tasks.RetrieveWmsTask
+import app.georchestra.beneth.fr.georchestra.utils.GsUtils
 import fr.beneth.wxslib.Layer
 import fr.beneth.wxslib.georchestra.Instance
 import fr.beneth.wxslib.operations.Capabilities
@@ -23,11 +24,7 @@ public class GeoserverActivity extends AppCompatActivity {
     final int MENU_METADATA = 1
     int georInstanceId
 
-    public static String getGeoserverWmsUrl(String instanceUrl, String operation) {
-        def ret = "${instanceUrl}geoserver/wms?service=wms&request=${operation}"
-        ret = ret -~ /(mapfishapp|carto)\//
-        return ret
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +36,7 @@ public class GeoserverActivity extends AppCompatActivity {
         georInstanceId = extras.getInt("GeorInstance.id")
         Instance ist = GeorInstanceHolder.getInstance().getGeorInstances().get(georInstanceId)
         Capabilities wmsCap = WmsCapabilitiesHolder.getInstance().getWmsCapabilities()
-        def gsUrl = GeoserverActivity.getGeoserverWmsUrl(ist.url, "getcapabilities")
+        def gsUrl = GsUtils.getGeoserverWmsUrl(ist.url, "getcapabilities")
 
         ListView lv = (ListView) this.findViewById(R.id.LayersList)
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -56,7 +56,7 @@ class RetrieveGeorInstancesTask extends AsyncTask<Object, Void, Object> {
             }
         }
         lv.setAdapter(aa)
-
+        activity.updateMapData(geOrInstances)
         return
     }
 }

@@ -62,22 +62,57 @@ public class MetadataActivity extends AppCompatActivity {
             ).execute(m.graphicOverviewUrls.first())
         }
         if (m.responsibleParty) {
+            def indivName = (TextView) this.findViewById(R.id.individualName)
+            def position = (TextView) this.findViewById(R.id.position)
+            def orgname = (TextView) this.findViewById(R.id.orgname)
             ((TextView) this.findViewById(R.id.responsibleparty)).setText("Responsible party")
-            ((TextView) this.findViewById(R.id.individualName)).
-                    setText(m.responsibleParty.individualName)
-            ((TextView) this.findViewById(R.id.position)).
-                    setText(m.responsibleParty.positionName)
-            ((TextView) this.findViewById(R.id.orgname)).
-                    setText(m.responsibleParty.organisationName)
+
+            if (m.responsibleParty.individualName) {
+                indivName.setText(m.responsibleParty.individualName)
+            } else {
+                indivName.setVisibility(View.GONE)
+            }
+
+            if (m.responsibleParty.positionName) {
+                position.setText(m.responsibleParty.positionName)
+            } else {
+                position.setVisibility(View.GONE)
+            }
+
+            if (m.responsibleParty.organisationName) {
+                orgname.setText(m.responsibleParty.organisationName)
+            } else {
+                orgname.setVisibility(View.GONE)
+            }
             if (m.responsibleParty.address) {
                 def a = m.responsibleParty.address
-                ((TextView) this.findViewById(R.id.addr_deliverypoint)).setText(a.deliveryPoint)
-                ((TextView) this.findViewById(R.id.addr_postalcode)).setText(a.postalCode)
-                ((TextView) this.findViewById(R.id.addr_city)).setText(a.city)
-                ((TextView) this.findViewById(R.id.addr_email)).setText(a.electronicMailAddress)
+                def dp = (TextView) this.findViewById(R.id.addr_deliverypoint)
+                def pc = (TextView) this.findViewById(R.id.addr_postalcode)
+                def city = (TextView) this.findViewById(R.id.addr_city)
+                def mail = (TextView) this.findViewById(R.id.addr_email)
+                if (a.deliveryPoint) {
+                    dp.setText(a.deliveryPoint)
+                } else {
+                    dp.setVisibility(View.GONE)
+                }
+                if (a.postalCode) {
+                    pc.setText(a.postalCode)
+                } else {
+                    pc.setVisibility(View.GONE)
+                }
+                if (a.city) {
+                    city.setText(a.city)
+                } else {
+                    city.setVisibility(View.GONE)
+                }
+                if (a.electronicMailAddress) {
+                    mail.setText(a.electronicMailAddress)
+                } else {
+                    mail.setVisibility(View.GONE)
+                }
             }
         } else {
-            ((TextView) this.findViewById(R.id.responsibleparty)).setVisibility(View.INVISIBLE)
+            ((TextView) this.findViewById(R.id.responsibleparty)).setVisibility(View.GONE)
         }
         if (m.onlineResources.size() > 0) {
             ((TextView) this.findViewById(R.id.onlineresourcetitle)).setText("Online resources")
@@ -87,7 +122,7 @@ public class MetadataActivity extends AppCompatActivity {
                         addView(createOnlineResourceElement(it))
             }
         } else {
-            ((TextView) this.findViewById(R.id.onlineresourcetitle)).setVisibility(View.INVISIBLE)
+            ((TextView) this.findViewById(R.id.onlineresourcetitle)).setVisibility(View.GONE)
 
         }
     }

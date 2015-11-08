@@ -1,12 +1,11 @@
 package app.georchestra.beneth.fr.georchestra.activities
 
-import android.app.Activity
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import android.webkit.WebView
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import app.georchestra.beneth.fr.georchestra.R
 import app.georchestra.beneth.fr.georchestra.holders.GeorInstanceHolder
 import app.georchestra.beneth.fr.georchestra.holders.WmsCapabilitiesHolder
@@ -28,17 +27,20 @@ public class MetadataActivity extends AppCompatActivity {
         setContentView(R.layout.activity_metadata)
         Bundle extras = getIntent().getExtras()
         int georInstanceId = extras.getInt("GeorInstance.id")
-        String layerName = extras.getString("GeorInstance.layer_name")
         Instance ist = GeorInstanceHolder.getInstance().getGeorInstances().get(georInstanceId)
+
         Capabilities wmsCap = WmsCapabilitiesHolder.getInstance().getWmsCapabilities()
+        String layerName = extras.getString("GeorInstance.layer_name")
         layer = wmsCap.findLayerByName(layerName)
 
         def mdUuid = GnUtils.guessMetadataUuid(layer.metadataUrls)
-
-        def mdrt = new RetrieveMetadataTask(this)
-        mdrt.execute(ist.url -~ /(mapfishapp|carto)\// +
-                "/geonetwork/srv/eng/xml.metadata.get?uuid=${mdUuid}")
-
+        if (mdUuid != null) {
+            def mdrt = new RetrieveMetadataTask(this)
+            mdrt.execute(ist.url - ~/(mapfishapp|carto)\// +
+                    "/geonetwork/srv/eng/xml.metadata.get?uuid=${mdUuid}")
+        } else {
+            Toast.makeText(this, "Unable to find the metadata UUID !",Toast.LENGTH_LONG).show()
+        }
     }
 
     public void updateInterface(Metadata m) {

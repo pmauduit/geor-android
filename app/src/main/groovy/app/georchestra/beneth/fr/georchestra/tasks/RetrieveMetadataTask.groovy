@@ -35,7 +35,6 @@ public class RetrieveMetadataTask extends AsyncTask<Object, Void, Metadata> {
             Toast.makeText(activity.getApplicationContext(), error.getMessage(),
                     Toast.LENGTH_LONG).show()
         }
-
         activity.updateInterface(result)
     }
 }

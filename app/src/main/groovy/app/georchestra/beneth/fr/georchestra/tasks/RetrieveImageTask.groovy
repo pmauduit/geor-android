@@ -1,9 +1,8 @@
-package app.georchestra.beneth.fr.georchestra.tasks;
+package app.georchestra.beneth.fr.georchestra.tasks
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.util.Log;
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.os.AsyncTask
 import android.widget.ImageView
 
 public class RetrieveImageTask extends AsyncTask<Object, Void, Bitmap> {
@@ -23,7 +22,6 @@ public class RetrieveImageTask extends AsyncTask<Object, Void, Bitmap> {
             InputStream ins = new java.net.URL(url).openStream()
             image = BitmapFactory.decodeStream(ins)
         } catch (Throwable e) {
-            Log.e(RetrieveImageTask.class.toString(), e.getMessage())
             error = e
         }
         return image

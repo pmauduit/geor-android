@@ -1,6 +1,8 @@
 package app.georchestra.beneth.fr.georchestra.activities
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.*
@@ -38,8 +40,14 @@ public class GeoserverActivity extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                def oldColor = ((ColorDrawable) view.getBackground()).getColor()
+                view.setBackgroundColor(android.R.drawable.list_selector_background)
+
                 def clickedLayer =  currentLayersList.get(position)
-                if (clickedLayer.layers.isEmpty()) return
+                if (clickedLayer.layers.isEmpty()) {
+                    view.setBackgroundColor(oldColor)
+                    return
+                }
                 refreshLayersList(clickedLayer.layers)
             }
         })

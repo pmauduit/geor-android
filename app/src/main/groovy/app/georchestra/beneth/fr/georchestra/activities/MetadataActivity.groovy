@@ -1,9 +1,14 @@
 package app.georchestra.beneth.fr.georchestra.activities
 
+import android.graphics.Typeface
+import android.opengl.Visibility
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.TypedValue
 import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import app.georchestra.beneth.fr.georchestra.R
@@ -13,6 +18,7 @@ import app.georchestra.beneth.fr.georchestra.tasks.RetrieveImageTask
 import app.georchestra.beneth.fr.georchestra.tasks.RetrieveMetadataTask
 import app.georchestra.beneth.fr.georchestra.utils.GnUtils
 import fr.beneth.cswlib.metadata.Metadata
+import fr.beneth.cswlib.metadata.OnlineResource
 import fr.beneth.wxslib.Layer
 import fr.beneth.wxslib.georchestra.Instance
 import fr.beneth.wxslib.operations.Capabilities
@@ -49,15 +55,20 @@ public class MetadataActivity extends AppCompatActivity {
         ((TextView) this.findViewById(R.id.title)).setText(m.title)
         ((TextView) this.findViewById(R.id._abstract)).setText(m._abstract)
 
+        ((TextView) this.findViewById(R.id.keywords)).setText("Keywords: " + m.keywords.join(", "))
         if(m.graphicOverviewUrls.first() != null) {
             new RetrieveImageTask(
                     (ImageView) this.findViewById(R.id.overview)
             ).execute(m.graphicOverviewUrls.first())
         }
         if (m.responsibleParty) {
-            ((TextView) this.findViewById(R.id.individualName)).setText(m.responsibleParty.individualName)
-            ((TextView) this.findViewById(R.id.position)).setText(m.responsibleParty.positionName)
-            ((TextView) this.findViewById(R.id.orgname)).setText(m.responsibleParty.organisationName)
+            ((TextView) this.findViewById(R.id.responsibleparty)).setText("Responsible party")
+            ((TextView) this.findViewById(R.id.individualName)).
+                    setText(m.responsibleParty.individualName)
+            ((TextView) this.findViewById(R.id.position)).
+                    setText(m.responsibleParty.positionName)
+            ((TextView) this.findViewById(R.id.orgname)).
+                    setText(m.responsibleParty.organisationName)
             if (m.responsibleParty.address) {
                 def a = m.responsibleParty.address
                 ((TextView) this.findViewById(R.id.addr_deliverypoint)).setText(a.deliveryPoint)
@@ -65,7 +76,55 @@ public class MetadataActivity extends AppCompatActivity {
                 ((TextView) this.findViewById(R.id.addr_city)).setText(a.city)
                 ((TextView) this.findViewById(R.id.addr_email)).setText(a.electronicMailAddress)
             }
+        } else {
+            ((TextView) this.findViewById(R.id.responsibleparty)).setVisibility(View.INVISIBLE)
         }
+        if (m.onlineResources.size() > 0) {
+            ((TextView) this.findViewById(R.id.onlineresourcetitle)).setText("Online resources")
+
+            m.onlineResources.each {
+                ((LinearLayout) this.findViewById(R.id.onlineresourcecontainer)).
+                        addView(createOnlineResourceElement(it))
+            }
+        } else {
+            ((TextView) this.findViewById(R.id.onlineresourcetitle)).setVisibility(View.INVISIBLE)
+
+        }
+    }
+
+    private View createOnlineResourceElement(OnlineResource res) {
+        def olres = new LinearLayout(this)
+        def lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        olres.setLayoutParams(lp)
+        olres.setOrientation(LinearLayout.VERTICAL)
+
+        def nameView = new TextView(this)
+        nameView.setText(res.name)
+        nameView.setTextAppearance(this, android.R.attr.textAppearanceLarge)
+        nameView.setTypeface(null, Typeface.BOLD)
+
+        def descView = new TextView(this)
+        descView.setText(res.description)
+        descView.setTextAppearance(this, android.R.attr.textAppearanceSmall)
+        descView.setTypeface(null, Typeface.ITALIC)
+
+        def protocolView = new TextView(this)
+        protocolView.setText(res.protocol)
+        protocolView.setTypeface(null, Typeface.BOLD)
+
+        def urlView = new TextView(this)
+        urlView.setText(res.url)
+        urlView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10)
+        urlView.setTypeface(null, Typeface.ITALIC)
+
+        olres.addView(nameView, lp)
+        olres.addView(descView, lp)
+        olres.addView(protocolView, lp)
+        olres.addView(urlView, lp)
+        return olres
     }
 
     @Override
@@ -77,4 +136,5 @@ public class MetadataActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item)
     }
+
 }

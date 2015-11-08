@@ -5,11 +5,14 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.AdapterView
+import android.widget.Button
 import android.widget.ListView
 import app.georchestra.beneth.fr.georchestra.R
 import app.georchestra.beneth.fr.georchestra.holders.GeorInstanceHolder
 import app.georchestra.beneth.fr.georchestra.tasks.RetrieveGeorInstancesTask
 import fr.beneth.wxslib.georchestra.Instance
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory
+import org.osmdroid.views.MapView
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,6 +35,25 @@ public class MainActivity extends AppCompatActivity {
                 Intent georInstanceIntent = new Intent(getApplicationContext(), InstanceActivity.class)
                 georInstanceIntent.putExtra("GeorInstance.id", position)
                 startActivityForResult(georInstanceIntent, RESULT_OK)
+            }
+        })
+
+        Button sw = (Button) this.findViewById(R.id.switchMapButton)
+        MapView mv = (MapView) this.findViewById(R.id.mapView)
+        mv.setTileSource(TileSourceFactory.MAPQUESTOSM)
+
+        sw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            void onClick(View v) {
+                if (mv.getVisibility() == View.GONE) {
+                    lv.setVisibility(View.GONE)
+                    mv.setVisibility(View.VISIBLE)
+                    sw.setText("Switch to list view")
+                } else {
+                    mv.setVisibility(View.GONE)
+                    lv.setVisibility(View.VISIBLE)
+                    sw.setText("Switch to map view")
+                }
             }
         })
         this.findViewById(R.id.ProgressBar).setVisibility(View.VISIBLE)

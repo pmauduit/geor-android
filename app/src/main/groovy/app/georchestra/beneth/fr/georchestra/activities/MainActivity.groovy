@@ -40,7 +40,12 @@ public class MainActivity extends AppCompatActivity {
 
         Button sw = (Button) this.findViewById(R.id.switchMapButton)
         MapView mv = (MapView) this.findViewById(R.id.mapView)
-        mv.setTileSource(TileSourceFactory.MAPQUESTOSM)
+        mv.setTileSource(TileSourceFactory.MAPNIK)
+        mv.setMultiTouchControls(true)
+
+        // TODO: hook into georInstancesTask to add some overlays
+        // in the map view
+        // http://stackoverflow.com/questions/6496366/adding-overlay-to-osmdroid
 
         sw.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button sw = (Button) this.findViewById(R.id.switchMapButton)
         MapView mv = (MapView) this.findViewById(R.id.mapView)
-        mv.setTileSource(TileSourceFactory.MAPNIK)
+        mv.setTileSource(TileSourceFactory.CYCLEMAP)
         mv.setMultiTouchControls(true)
 
         sw.setOnClickListener(new View.OnClickListener() {

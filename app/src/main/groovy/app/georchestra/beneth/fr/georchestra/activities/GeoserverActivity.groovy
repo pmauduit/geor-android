@@ -46,6 +46,7 @@ public class GeoserverActivity extends AppCompatActivity {
                 def clickedLayer =  currentLayersList.get(position)
                 if (clickedLayer.layers.isEmpty()) {
                     view.setBackgroundColor(oldColor)
+                    view.showContextMenu()
                     return
                 }
                 refreshLayersList(clickedLayer.layers)

@@ -85,13 +85,19 @@ public class MainActivity extends AppCompatActivity {
                 new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
                     @Override
                     public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
-                        Toast.makeText(getApplicationContext(),
-                                "tapped on ${item.title}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(getApplicationContext(), "tapped on ${item.title}, "+
+                                "long-tap to select this geOrchestra instance",
+                                Toast.LENGTH_SHORT).show()
                         return true
                     }
                     @Override
                     boolean onItemLongPress(int index, OverlayItem item) {
-                        return false
+                        // the index should be the same in the map list as in the georInstances
+                        // holder
+                        Intent georInstanceIntent = new Intent(getApplicationContext(),
+                                InstanceActivity.class)
+                        georInstanceIntent.putExtra("GeorInstance.id", index)
+                        startActivityForResult(georInstanceIntent, RESULT_OK)
                     }
                 }, mrp)
 

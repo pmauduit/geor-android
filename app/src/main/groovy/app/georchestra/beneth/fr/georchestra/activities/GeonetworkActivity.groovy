@@ -3,11 +3,13 @@ package app.georchestra.beneth.fr.georchestra.activities
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import app.georchestra.beneth.fr.georchestra.R
 import app.georchestra.beneth.fr.georchestra.holders.GeorInstanceHolder
+import app.georchestra.beneth.fr.georchestra.holders.WmsCapabilitiesHolder
 import app.georchestra.beneth.fr.georchestra.tasks.RetrieveOrganismsTask
 import app.georchestra.beneth.fr.georchestra.utils.GnUtils
 import fr.beneth.cswlib.geonetwork.GeoNetworkSource
@@ -83,5 +85,14 @@ public class GeonetworkActivity extends AppCompatActivity {
         ovAdapter.clear()
         ovAdapter.addAll(gnSources)
         ovAdapter.notifyDataSetChanged()
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                    this.finish()
+                    return true
+                }
     }
 }

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
-import android.webkit.WebView
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
@@ -63,8 +62,9 @@ public class InstanceActivity extends AppCompatActivity {
         this.findViewById(R.id.gnButton).setOnClickListener(new View.OnClickListener() {
             @Override
             void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "not implemented yet !",
-                        Toast.LENGTH_LONG).show()
+                Intent gnActivity = new Intent(getApplicationContext(), GeonetworkActivity.class)
+                gnActivity.putExtra("GeorInstance.id", georInstanceId)
+                startActivityForResult(gnActivity, RESULT_OK)
             }
         })
         // Hook for viewer button

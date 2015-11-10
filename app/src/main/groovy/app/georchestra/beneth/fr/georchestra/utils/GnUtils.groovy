@@ -24,5 +24,12 @@ public class GnUtils {
         }
         return false
     }
+    public static getGeonetworkUrl(String instanceUrl) {
+        def ret = "${instanceUrl}geonetwork/"
+        // Hack to fix data from the georchestra instance WFS sources:
+        // Sometimes the url to the geOr instance points to the viewer.
+        ret = ret -~ /(mapfishapp|carto)\//
+        return ret
+    }
 }
 

@@ -79,7 +79,7 @@
                 <DatePicker
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
-                    android:id="@+id/datePicker"
+                    android:id="@+id/dateFromPicker"
                     android:calendarViewShown="false"
                     android:datePickerMode="spinner" />
 
@@ -100,7 +100,7 @@
                 <DatePicker
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
-                    android:id="@+id/datePicker2"
+                    android:id="@+id/dateToPicker"
                     android:datePickerMode="spinner"
                     android:calendarViewShown="false" />
 

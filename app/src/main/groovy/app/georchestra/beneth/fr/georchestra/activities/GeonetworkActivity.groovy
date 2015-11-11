@@ -3,6 +3,7 @@ package app.georchestra.beneth.fr.georchestra.activities
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -128,7 +129,7 @@ public class GeonetworkActivity extends AppCompatActivity {
                     def currentSource = gnSources.find { it.name == src }
                     acc << currentSource.uuid
                 }
-                selSources = selSources.join(" or ")
+                selSources = selSources.join("%20or%20")
 
                 def whenActivated = whenCheck.checked
                 def dfp = (DatePicker) that.findViewById(R.id.dateFromPicker)
@@ -139,7 +140,7 @@ public class GeonetworkActivity extends AppCompatActivity {
                 def dateTo = "${dtp.getYear()}-" +
                         "${String.format("%02d", dtp.getMonth() + 1)}-" +
                         "${String.format("%02d", dtp.getDayOfMonth())}"
-                def selTypes = that.selectedTypes.join(" or ")
+                def selTypes = that.selectedTypes.join("%20or%20")
                 def freeTxt = (SearchView) that.findViewById(R.id.freeTextSearch)
 
                 def url = GnUtils.getGeonetworkUrl(ist.url)
@@ -153,9 +154,10 @@ public class GeonetworkActivity extends AppCompatActivity {
                 if (selSources) {
                     url += "&siteId=${selSources}"
                 }
+
                 def rgnrt = new RetrieveGeonetworkResultsTask(that)
                 that.findViewById(R.id.progressBar).setVisibility(View.VISIBLE)
-
+                Log.d(this.getClass().toString(), url)
                 rgnrt.execute(url)
             }
         })

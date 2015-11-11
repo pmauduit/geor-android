@@ -12,7 +12,7 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/listView"
+        android:id="@+id/mdView"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 </RelativeLayout>

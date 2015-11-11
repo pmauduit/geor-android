@@ -1,8 +1,8 @@
 package app.georchestra.beneth.fr.georchestra.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +10,9 @@ import android.widget.*
 import app.georchestra.beneth.fr.georchestra.R
 import app.georchestra.beneth.fr.georchestra.holders.GeorInstanceHolder
 import app.georchestra.beneth.fr.georchestra.tasks.RetrieveCatalogueResourcesTask
+import app.georchestra.beneth.fr.georchestra.tasks.RetrieveGeonetworkResultsTask
 import app.georchestra.beneth.fr.georchestra.utils.GnUtils
+import fr.beneth.cswlib.geonetwork.GeoNetworkQuery
 import fr.beneth.cswlib.geonetwork.GeoNetworkSource
 import fr.beneth.wxslib.georchestra.Instance
 
@@ -25,7 +27,7 @@ public class GeonetworkActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_geonetwork)
-
+        this.findViewById(R.id.progressBar).setVisibility(View.GONE)
         def dateFromRow = (TableRow) this.findViewById(R.id.dateFromRow)
         def dateToRow   = (TableRow) this.findViewById(R.id.dateToRow)
         dateFromRow.setVisibility(View.GONE)
@@ -35,9 +37,7 @@ public class GeonetworkActivity extends AppCompatActivity {
 
         def ov = (ListView) this.findViewById(R.id.organismView)
         ArrayAdapter<GeoNetworkSource> arrayAdapter = new ArrayAdapter<GeoNetworkSource>(
-                this,
-                android.R.layout.simple_list_item_1,
-                gnSources) {
+                this, android.R.layout.simple_list_item_1, gnSources) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent)
@@ -82,9 +82,7 @@ public class GeonetworkActivity extends AppCompatActivity {
         // Type of data
         def tv = (ListView) this.findViewById(R.id.typeView)
         def typeAdapter = new ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_list_item_1,
-                typeOfResources) {
+                this, android.R.layout.simple_list_item_1, typeOfResources) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent)
@@ -126,21 +124,39 @@ public class GeonetworkActivity extends AppCompatActivity {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             void onClick(View v) {
-                def selSources = that.selectedSources.join(", ")
+                def selSources = that.selectedSources.inject([]) { acc, src ->
+                    def currentSource = gnSources.find { it.name == src }
+                    acc << currentSource.uuid
+                }
+                selSources = selSources.join(" or ")
+
                 def whenActivated = whenCheck.checked
                 def dfp = (DatePicker) that.findViewById(R.id.dateFromPicker)
                 def dtp = (DatePicker) that.findViewById(R.id.dateToPicker)
-                def dateFrom = "${dfp.getYear()}-${dfp.getMonth()}-${dfp.getDayOfMonth()}"
-                def dateTo = "${dtp.getYear()}-${dtp.getMonth()}-${dtp.getDayOfMonth()}"
-                def selTypes = that.selectedTypes.join(", ")
+                def dateFrom = "${dfp.getYear()}-" +
+                        "${String.format("%02d", dfp.getMonth() + 1)}-" +
+                        "${String.format("%02d", dfp.getDayOfMonth())}"
+                def dateTo = "${dtp.getYear()}-" +
+                        "${String.format("%02d", dtp.getMonth() + 1)}-" +
+                        "${String.format("%02d", dtp.getDayOfMonth())}"
+                def selTypes = that.selectedTypes.join(" or ")
+                def freeTxt = (SearchView) that.findViewById(R.id.freeTextSearch)
 
-                def toasted = "sources: ${selSources}\r\n" +
-                        "whensearch: ${whenActivated}\r\n" +
-                        "date from: ${dateFrom}\r\n" +
-                        "date to: ${dateTo}\r\n" +
-                        "type of res: ${selTypes}\r\n"
-                Toast.makeText(getApplicationContext(), toasted,Toast.LENGTH_LONG).show()
+                def url = GnUtils.getGeonetworkUrl(ist.url)
+                url += "srv/eng/q?fast=index&any=${freeTxt.getQuery()}"
+                if (selTypes)
+                    url += "&type=${selTypes}"
+                if ((whenActivated) && (dateFrom))
+                    url += "&extFrom=${dateFrom}"
+                if ((whenActivated) && (dateTo))
+                    url += "&extTo=${dateTo}"
+                if (selSources) {
+                    url += "&siteId=${selSources}"
+                }
+                def rgnrt = new RetrieveGeonetworkResultsTask(that)
+                that.findViewById(R.id.progressBar).setVisibility(View.VISIBLE)
 
+                rgnrt.execute(url)
             }
         })
 
@@ -172,5 +188,14 @@ public class GeonetworkActivity extends AppCompatActivity {
                     this.finish()
                     return true
                 }
+    }
+
+    void notifyGeonetworkResults(GeoNetworkQuery geoNetworkQuery) {
+        this.findViewById(R.id.progressBar).setVisibility(View.GONE)
+        if (geoNetworkQuery) {
+            Intent gnra = new Intent(getApplicationContext(), GnResultsActivity.class)
+            startActivityForResult(gnra, RESULT_OK)
+        }
+
     }
 }

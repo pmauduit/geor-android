@@ -119,6 +119,8 @@ public class GeonetworkActivity extends AppCompatActivity {
         Instance ist = GeorInstanceHolder.getInstance().getGeorInstances().get(georInstanceId)
         rotask.execute(GnUtils.getGeonetworkUrl(ist.url))
 
+        // Click on  "search"
+
 
     }
 

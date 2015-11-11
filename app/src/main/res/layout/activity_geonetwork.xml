@@ -28,12 +28,13 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:text="Organism"
                 android:id="@+id/textView" />
 
             <ListView
                 android:layout_width="match_parent"
+                android:background="@drawable/border"
                 android:id="@+id/organismView"
                 android:layout_height="wrap_content" />
 
@@ -54,7 +55,7 @@
                 <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:text="When ?"
                 android:id="@+id/textView3" />
 
@@ -121,12 +122,13 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Type of data"
                 android:id="@+id/textView7" />
 
             <ListView
                 android:layout_width="match_parent"
+                android:background="@drawable/border"
                 android:layout_height="match_parent"
                 android:id="@+id/typeView" />
         </LinearLayout>

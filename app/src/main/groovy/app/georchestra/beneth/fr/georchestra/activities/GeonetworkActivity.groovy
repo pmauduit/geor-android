@@ -91,9 +91,9 @@ public class GeonetworkActivity extends AppCompatActivity {
                 def typeres = typeOfResources.get(position)
                 TextView text1 = (TextView) view.findViewById(android.R.id.text1)
                 if (selectedTypes.contains(typeres)) {
-                    view.setBackgroundColor(R.color.itemWithMd)
+                    view.setBackgroundResource(R.color.itemWithMd)
                 } else {
-                    view.setBackgroundColor(android.R.color.transparent)
+                    view.setBackgroundResource(android.R.color.transparent)
                 }
                 text1.setText(typeres)
                 return view
@@ -121,6 +121,28 @@ public class GeonetworkActivity extends AppCompatActivity {
 
         // Click on  "search"
 
+        def that = this
+        def searchBtn = (Button) this.findViewById(R.id.searchButton)
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            void onClick(View v) {
+                def selSources = that.selectedSources.join(", ")
+                def whenActivated = whenCheck.checked
+                def dfp = (DatePicker) that.findViewById(R.id.dateFromPicker)
+                def dtp = (DatePicker) that.findViewById(R.id.dateToPicker)
+                def dateFrom = "${dfp.getYear()}-${dfp.getMonth()}-${dfp.getDayOfMonth()}"
+                def dateTo = "${dtp.getYear()}-${dtp.getMonth()}-${dtp.getDayOfMonth()}"
+                def selTypes = that.selectedTypes.join(", ")
+
+                def toasted = "sources: ${selSources}\r\n" +
+                        "whensearch: ${whenActivated}\r\n" +
+                        "date from: ${dateFrom}\r\n" +
+                        "date to: ${dateTo}\r\n" +
+                        "type of res: ${selTypes}\r\n"
+                Toast.makeText(getApplicationContext(), toasted,Toast.LENGTH_LONG).show()
+
+            }
+        })
 
     }
 

@@ -23,7 +23,9 @@ public class GnResultsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_gn_results)
 
         gnQuery = GeoNetworkQueryHolder.getInstance().getGeoNetworkQuery()
-
+        if (gnQuery) {
+            this.setTitle(this.getTitle() + " (${gnQuery.metadatas.size()} MDs)")
+        }
         def lv = (ListView) this.findViewById(R.id.mdView)
         def mdAdapter = new ArrayAdapter<Metadata>(this, android.R.layout.simple_list_item_1, gnQuery.metadatas) {
             @Override

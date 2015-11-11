@@ -66,6 +66,7 @@
             </TableRow>
             <TableRow
                 android:layout_width="match_parent"
+                android:id="@+id/dateFromRow"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -87,6 +88,7 @@
 
             <TableRow
                 android:layout_width="match_parent"
+                android:id="@+id/dateToRow"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -129,9 +131,21 @@
                 android:id="@+id/typeView" />
         </LinearLayout>
 
-        <SearchView
-            android:layout_width="match_parent"
+        <TableRow android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/searchView2" />
+            android:weightSum="1">
+        <SearchView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/searchView2"
+            android:layout_weight="1.00" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Search"
+                android:id="@+id/button" />
+        </TableRow>
     </LinearLayout>
 </RelativeLayout>

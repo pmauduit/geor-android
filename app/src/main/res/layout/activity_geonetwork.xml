@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:text="Organism"
+                android:text="Organisms"
                 android:id="@+id/textView" />
 
             <ListView

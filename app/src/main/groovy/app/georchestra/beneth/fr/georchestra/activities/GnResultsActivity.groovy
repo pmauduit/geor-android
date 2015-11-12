@@ -27,13 +27,15 @@ public class GnResultsActivity extends AppCompatActivity {
             this.setTitle(this.getTitle() + " (${gnQuery.metadatas.size()} MDs)")
         }
         def lv = (ListView) this.findViewById(R.id.mdView)
-        def mdAdapter = new ArrayAdapter<Metadata>(this, android.R.layout.simple_list_item_1, gnQuery.metadatas) {
+        def mdAdapter = new ArrayAdapter<Metadata>(this, R.layout.metadata_list_item,
+                R.id.mdTitle, gnQuery.metadatas) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
 
                 View view = super.getView(position, convertView, parent)
                 def md = gnQuery.metadatas.get(position)
-                TextView text1 = (TextView) view.findViewById(android.R.id.text1)
+
+                TextView text1 = (TextView) view.findViewById(R.id.mdTitle)
                 text1.setText(md.title)
                 return view
             }

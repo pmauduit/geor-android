@@ -35,8 +35,20 @@ public class GnResultsActivity extends AppCompatActivity {
                 View view = super.getView(position, convertView, parent)
                 def md = gnQuery.metadatas.get(position)
 
-                TextView text1 = (TextView) view.findViewById(R.id.mdTitle)
-                text1.setText(md.title)
+                def title = (TextView) view.findViewById(R.id.mdTitle)
+                title.setText(md.title)
+
+                def _abstract = (TextView) view.findViewById(R.id.mdAbstract)
+                _abstract.setText(md._abstract)
+
+                def keywords = (TextView) view.findViewById(R.id.mdKeywords)
+                keywords.setText(md.keywords.join(", "))
+
+                def scopecode = (TextView) view.findViewById(R.id.mdScopeCode)
+                scopecode.setText(md.scopeCode)
+
+                def uuid = (TextView) view.findViewById(R.id.mdUuid)
+                uuid.setText(md.fileIdentifier)
                 return view
             }
         }

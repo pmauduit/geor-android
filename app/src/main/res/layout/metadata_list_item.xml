@@ -8,7 +8,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Metadata Title"
-        android:id="@+id/mdTitle" />
+        android:id="@+id/mdTitle"
+        android:layout_marginTop="@dimen/activity_vertical_margin" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -24,7 +25,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="metadata abstract"
-            android:id="@+id/mdAbstract" />
+            android:id="@+id/mdAbstract"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin" />
 
     </LinearLayout>
 
@@ -54,8 +57,8 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Small Text"
-            android:id="@+id/scopeCode"
-            android:layout_weight="1" />
+            android:id="@+id/mdScopeCode"
+            android:layout_weight="3" />
     </LinearLayout>
 
 </LinearLayout>

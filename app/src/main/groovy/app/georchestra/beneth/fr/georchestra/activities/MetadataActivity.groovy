@@ -57,9 +57,9 @@ public class MetadataActivity extends AppCompatActivity {
 
         ((TextView) this.findViewById(R.id.keywords)).setText("Keywords: " + m.keywords.join(", "))
         if(m.graphicOverviewUrls.first() != null) {
-            new RetrieveImageTask(
+            new RetrieveImageTask([
                     (ImageView) this.findViewById(R.id.overview)
-            ).execute(m.graphicOverviewUrls.first())
+            ]).execute([m.graphicOverviewUrls.first()])
         }
         if (m.responsibleParty) {
             def indivName = (TextView) this.findViewById(R.id.individualName)

@@ -3,32 +3,57 @@ package app.georchestra.beneth.fr.georchestra.tasks
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.AsyncTask
+import android.util.Log
+import android.widget.ArrayAdapter
 import android.widget.ImageView
+import android.widget.ListView
 
-public class RetrieveImageTask extends AsyncTask<Object, Void, Bitmap> {
-    ImageView imageView
+public class RetrieveImageTask extends AsyncTask<Object, Void, ArrayList<Bitmap>> {
     Throwable error
-    Bitmap image
+    ArrayList<Bitmap> images = new ArrayList<Bitmap>()
+    ArrayList<ImageView> imageViews
+    ListView listView
 
-    public RetrieveImageTask(ImageView imageView) {
-        this.imageView = imageView
+    HashMap<String, Bitmap> hmImages = new HashMap<String, Bitmap>()
+
+    public RetrieveImageTask(ArrayList<ImageView> imageViews) {
+            this.imageViews = imageViews
+    }
+    public RetrieveImageTask(ListView v) {
+        this.listView = v
     }
 
     @Override
-    protected Bitmap doInBackground(Object... urls) {
-        String url = (String) urls[0]
-        image = null
-        try {
-            InputStream ins = new java.net.URL(url).openStream()
-            image = BitmapFactory.decodeStream(ins)
-        } catch (Throwable e) {
-            error = e
+    protected ArrayList<Bitmap> doInBackground(Object... urls) {
+            def alUrls = (ArrayList<String>) urls[0]
+            alUrls.each {
+                if (it == null)
+                    return
+                try {
+                    InputStream ins = new URL(it).openStream()
+                    def bm =  BitmapFactory.decodeStream(ins)
+                    images << bm
+                    hmImages[it] = bm
+                } catch (Throwable e) {
+                    error = e
+                    Log.d(this.getClass().toString(), "Error parsing image " + it, e)
+                    return
+                }
+            }
+        return images
+    }
+
+    @Override
+    protected void onPostExecute(ArrayList<Bitmap> result) {
+        if (result == null) {
+            return
         }
-        return image
-    }
-
-    @Override
-    protected void onPostExecute(Bitmap result) {
-        imageView.setImageBitmap(result)
+        if (imageViews) {
+            imageViews.eachWithIndex { it, idx ->
+                it.setImageBitmap(result[idx])
+            }
+        } else if (listView) {
+            ((ArrayAdapter) listView.getAdapter()).notifyDataSetChanged()
+        }
     }
 }

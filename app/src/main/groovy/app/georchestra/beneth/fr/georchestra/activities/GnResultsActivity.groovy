@@ -6,16 +6,19 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
 import app.georchestra.beneth.fr.georchestra.R
 import app.georchestra.beneth.fr.georchestra.holders.GeoNetworkQueryHolder
+import app.georchestra.beneth.fr.georchestra.tasks.RetrieveImageTask
 import fr.beneth.cswlib.geonetwork.GeoNetworkQuery
 import fr.beneth.cswlib.metadata.Metadata
 
 public class GnResultsActivity extends AppCompatActivity {
 
     private GeoNetworkQuery gnQuery
+    private RetrieveImageTask retrieveImageTask
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +29,14 @@ public class GnResultsActivity extends AppCompatActivity {
         if (gnQuery) {
             this.setTitle(this.getTitle() + " (${gnQuery.metadatas.size()} MDs)")
         }
+
         def lv = (ListView) this.findViewById(R.id.mdView)
+        retrieveImageTask = new RetrieveImageTask(lv).execute(
+            gnQuery.metadatas.collect { if (it.graphicOverviewUrls.size() > 0)
+                it.graphicOverviewUrls[0]
+            }
+        )
+
         def mdAdapter = new ArrayAdapter<Metadata>(this, R.layout.metadata_list_item,
                 R.id.mdTitle, gnQuery.metadatas) {
             @Override
@@ -49,6 +59,13 @@ public class GnResultsActivity extends AppCompatActivity {
 
                 def uuid = (TextView) view.findViewById(R.id.mdUuid)
                 uuid.setText(md.fileIdentifier)
+
+                def mdOverView = (ImageView) view.findViewById(R.id.mdOverView)
+                if (md.graphicOverviewUrls.size() > 0) {
+                    def ovUrl = md.graphicOverviewUrls[0]
+                    if (retrieveImageTask.hmImages[ovUrl])
+                        mdOverView.setImageBitmap(retrieveImageTask.hmImages[ovUrl])
+                }
                 return view
             }
         }

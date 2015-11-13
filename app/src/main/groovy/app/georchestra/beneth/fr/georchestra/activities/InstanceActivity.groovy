@@ -33,8 +33,8 @@ public class InstanceActivity extends AppCompatActivity {
         this.setTitle(currentInst.title)
         if (currentInst.logo_url) {
             ImageView logoView = this.findViewById(R.id.LogoView)
-            def rit = new RetrieveImageTask(logoView)
-            rit.execute(currentInst.logo_url)
+            def rit = new RetrieveImageTask([logoView])
+            rit.execute([currentInst.logo_url])
         }
 
         // Filling up the html desc of the instance

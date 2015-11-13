@@ -104,22 +104,22 @@ public class LayerInfoActivity extends AppCompatActivity {
                                 "&BBOX=${bb.miny},${bb.minx},${bb.maxy},${bb.maxx}" +
                                 "&width=${height}&height=${width}"
                         if (! ritPortrait) {
-                            ritPortrait = new RetrieveImageTask(this)
-                            ritPortrait.execute(url)
+                            ritPortrait = new RetrieveImageTask([this])
+                            ritPortrait.execute([url])
                         } else {
-                            if (ritPortrait.image)
-                                this.setImageBitmap(ritPortrait.image)
+                            if (ritPortrait.images[0])
+                                this.setImageBitmap(ritPortrait.images[0])
                         }
                     } else {
                         url += "&layers=${l.name}&format=image/png&srs=${bb.crs}" +
                                 "&BBOX=${bb.miny},${bb.minx},${bb.maxy},${bb.maxx}" +
                                 "&width=${width}&height=${height}"
                         if (! ritLandscape) {
-                            ritLandscape = new RetrieveImageTask(this)
-                            ritLandscape.execute(url)
+                            ritLandscape = new RetrieveImageTask([this])
+                            ritLandscape.execute([url])
                         } else {
-                            if (ritLandscape.image)
-                                this.setImageBitmap(ritLandscape.image)
+                            if (ritLandscape.images[0])
+                                this.setImageBitmap(ritLandscape.images[0])
                         }
                     }
 

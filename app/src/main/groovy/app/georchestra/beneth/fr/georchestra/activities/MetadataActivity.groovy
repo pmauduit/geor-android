@@ -32,6 +32,9 @@ public class MetadataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_metadata)
         Bundle extras = getIntent().getExtras()
+        if (! extras) {
+            finish()
+        }
         int georInstanceId = extras.getInt("GeorInstance.id")
         Instance ist = GeorInstanceHolder.getInstance().getGeorInstances().get(georInstanceId)
 
@@ -56,7 +59,7 @@ public class MetadataActivity extends AppCompatActivity {
         ((TextView) this.findViewById(R.id._abstract)).setText(m._abstract)
 
         ((TextView) this.findViewById(R.id.keywords)).setText("Keywords: " + m.keywords.join(", "))
-        if(m.graphicOverviewUrls.first() != null) {
+        if(m.graphicOverviewUrls.size() > 0) {
             new RetrieveImageTask([
                     (ImageView) this.findViewById(R.id.overview)
             ]).execute([m.graphicOverviewUrls.first()])

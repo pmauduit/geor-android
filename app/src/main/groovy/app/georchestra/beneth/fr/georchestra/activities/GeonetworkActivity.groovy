@@ -166,8 +166,10 @@ public class GeonetworkActivity extends AppCompatActivity {
 
     void updateView(List<GeoNetworkSource> geoNetworkSources,
                     List<String> resources) {
-        gnSources = geoNetworkSources.clone()
-        typeOfResources = resources.clone()
+        if (gnSources != null)
+            gnSources = geoNetworkSources.clone()
+        if (typeOfResources != null)
+            typeOfResources = resources.clone()
 
         def ov = (ListView) this.findViewById(R.id.organismView)
         def tv = (ListView) this.findViewById(R.id.typeView)

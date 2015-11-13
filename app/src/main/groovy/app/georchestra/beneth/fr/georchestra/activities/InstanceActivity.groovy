@@ -22,7 +22,8 @@ public class InstanceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_instance)
         Bundle extras = getIntent().getExtras()
 
-        if (GeorInstanceHolder.getInstance().getGeorInstances() == null) {
+        if ((GeorInstanceHolder.getInstance().getGeorInstances() == null)
+            || (! extras)) {
             this.finish()
         }
 

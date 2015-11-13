@@ -31,6 +31,9 @@ public class GeoserverActivity extends AppCompatActivity {
         setTitle("GeoServer Layers")
 
         Bundle extras = getIntent().getExtras()
+        if (! extras) {
+            finish()
+        }
         georInstanceId = extras.getInt("GeorInstance.id")
         Instance ist = GeorInstanceHolder.getInstance().getGeorInstances().get(georInstanceId)
         Capabilities wmsCap = WmsCapabilitiesHolder.getInstance().getWmsCapabilities()

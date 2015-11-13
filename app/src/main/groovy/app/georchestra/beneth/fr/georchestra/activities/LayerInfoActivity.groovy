@@ -24,6 +24,9 @@ public class LayerInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_layer_info)
 
         Bundle extras = getIntent().getExtras()
+        if (! extras) {
+            finish()
+        }
         String layerName = extras.getString("GeorInstance.layer_name")
         int instanceId = extras.getInt("GeorInstance.id")
         def georInstance = GeorInstanceHolder.getInstance().getGeorInstances().get(instanceId)

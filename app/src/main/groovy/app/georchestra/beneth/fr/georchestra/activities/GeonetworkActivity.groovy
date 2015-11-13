@@ -154,7 +154,7 @@ public class GeonetworkActivity extends AppCompatActivity {
                 if (selSources) {
                     url += "&siteId=${selSources}"
                 }
-
+                url += "&from=1&to=30&hitsperpage=30"
                 def rgnrt = new RetrieveGeonetworkResultsTask(that)
                 that.findViewById(R.id.progressBar).setVisibility(View.VISIBLE)
                 Log.d(this.getClass().toString(), url)

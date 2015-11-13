@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#f4f4f4">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Metadata Title"
-        android:id="@+id/mdTitle"
-        android:layout_marginTop="@dimen/activity_vertical_margin" />
+        android:id="@+id/mdTitle" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -57,6 +58,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Small Text"
+            android:textAlignment="viewEnd"
             android:id="@+id/mdScopeCode"
             android:layout_weight="3" />
     </LinearLayout>

@@ -36,7 +36,7 @@ public class GeonetworkActivity extends AppCompatActivity {
 
         // Organism view
 
-        def ov = (ListView) this.findViewById(R.id.organismView)
+        def ov = (ListView) this.findViewById(R.id.organisationsView)
         ArrayAdapter<GeoNetworkSource> arrayAdapter = new ArrayAdapter<GeoNetworkSource>(
                 this, android.R.layout.simple_list_item_1, gnSources) {
             @Override
@@ -115,6 +115,9 @@ public class GeonetworkActivity extends AppCompatActivity {
         def rotask = new RetrieveCatalogueResourcesTask(this)
         Bundle extras = getIntent().getExtras()
         def georInstanceId = extras.getInt("GeorInstance.id")
+        if (! extras) {
+            finish()
+        }
         Instance ist = GeorInstanceHolder.getInstance().getGeorInstances().get(georInstanceId)
         rotask.execute(GnUtils.getGeonetworkUrl(ist.url))
 
@@ -171,7 +174,7 @@ public class GeonetworkActivity extends AppCompatActivity {
         if (typeOfResources != null)
             typeOfResources = resources.clone()
 
-        def ov = (ListView) this.findViewById(R.id.organismView)
+        def ov = (ListView) this.findViewById(R.id.organisationsView)
         def tv = (ListView) this.findViewById(R.id.typeView)
 
         def ovAdapter = (ArrayAdapter) ov.getAdapter()

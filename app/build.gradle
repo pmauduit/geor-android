@@ -21,6 +21,12 @@ android {
     lintOptions {
         abortOnError false
     }
+
+    packagingOptions {
+      exclude 'META-INF/DISCLAIMER'
+      exclude 'META-INF/LICENSE'
+      exclude 'META-INF/NOTICE'
+    }
     sourceSets { main { java.srcDirs = ['src/main/groovy'] } }
 }
 repositories {
@@ -32,8 +38,8 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'org.codehaus.groovy:groovy:2.4.3:grooid'
-    compile('org.codehaus.groovy:groovy-xml:2.4.3') {
+    compile 'org.codehaus.groovy:groovy:2.4.5:grooid'
+    compile('org.codehaus.groovy:groovy-xml:2.4.5') {
         exclude group: 'org.codehaus.groovy', module: 'groovy'
     }
     compile('fr.beneth:wxslib:1.1-SNAPSHOT') {

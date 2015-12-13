@@ -26,6 +26,7 @@ android {
       exclude 'META-INF/DISCLAIMER'
       exclude 'META-INF/LICENSE'
       exclude 'META-INF/NOTICE'
+      exclude 'META-INF/NOTICE.txt'
     }
     sourceSets { main { java.srcDirs = ['src/main/groovy'] } }
 }
@@ -44,6 +45,7 @@ dependencies {
     }
     compile('fr.beneth:wxslib:1.1-SNAPSHOT') {
         exclude group: 'org.codehaus.groovy', module: 'groovy-xml'
+        exclude group: 'commons-collections', module: 'commons-collections'
     }
 
     compile 'com.android.support:appcompat-v7:23.1.0'

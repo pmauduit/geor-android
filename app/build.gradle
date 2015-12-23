@@ -1,6 +1,35 @@
 apply plugin: 'com.android.application'
 apply plugin: 'groovyx.grooid.groovy-android'
 
+apply plugin: 'jacoco'
+
+
+jacoco {
+  toolVersion = "0.7.1.201405082137"
+}
+def coverageSourceDirs = [
+  'src/main/groovy',
+]
+
+task jacocoTestReport(type: JacocoReport, dependsOn: ["compileDebugSources"]) {
+  group = "Reporting"
+  description = "Generate Jacoco coverage reports after running tests."
+  reports {
+    xml.enabled = true
+    html.enabled = true
+  }
+  classDirectories = fileTree(
+      dir: './build/intermediates/classes/debug',
+      excludes: ['com/myapp/R*.class',
+      '**/*$InjectAdapter.class',
+      '**/*$ModuleAdapter.class',
+      '**/*$ViewInjector*.class'
+  ])
+  sourceDirectories = files(coverageSourceDirs)
+  executionData = files('build/jacoco/testDebug.exec')
+}
+
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
@@ -28,7 +57,22 @@ android {
       exclude 'META-INF/NOTICE'
       exclude 'META-INF/NOTICE.txt'
     }
-    sourceSets { main { java.srcDirs = ['src/main/groovy'] } }
+    sourceSets {
+      main {
+        java {
+          srcDirs = ['src/main/groovy']
+        }
+      }
+      test {
+        java {
+          srcDirs = ['src/test/groovy']
+        }
+      }
+    }
+
+    testOptions {
+      resultsDir = "${project.buildDir}/tests/results"
+    }
 }
 repositories {
     maven {
@@ -53,4 +97,5 @@ dependencies {
     compile 'org.osmdroid:osmdroid-android:4.3'
     compile 'org.slf4j:slf4j-simple:1.6.1'
 }
+
 

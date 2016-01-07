@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         MapView mv = (MapView) this.findViewById(R.id.mapView)
         mv.setTileSource(TileSourceFactory.CYCLEMAP)
         mv.setMultiTouchControls(true)
-
+        mv.getController().setZoom(3)
         sw.setOnClickListener(new View.OnClickListener() {
             @Override
             void onClick(View v) {

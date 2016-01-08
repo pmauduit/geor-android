@@ -41,6 +41,8 @@ android {
         versionCode 1
         versionName "1.0"
         buildConfigField "long", "TIMESTAMP", System.currentTimeMillis() + "L"
+        buildConfigField "String", "USER", "\"" + System.getProperty("user.name") + "\""
+        buildConfigField "String", "COMMIT", "git log --format=\"%H\" -n 1".execute().text
     }
     buildTypes {
         release {

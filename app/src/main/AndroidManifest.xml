@@ -62,15 +62,19 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.InstanceActivity" />
         </activity>
-        <activity android:name=".activities.GnResultsActivity"
+        <activity
+            android:name=".activities.GnResultsActivity"
             android:label="Metadata listing"
             android:parentActivityName=".activities.GeonetworkActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.GeonetworkActivity" />
-
-
         </activity>
+        <activity android:name=".activities.AboutActivity"
+            android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity" /></activity>
     </application>
 
 </manifest>

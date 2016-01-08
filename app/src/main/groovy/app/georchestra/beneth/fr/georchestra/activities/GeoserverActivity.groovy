@@ -2,6 +2,7 @@ package app.georchestra.beneth.fr.georchestra.activities
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -82,6 +83,8 @@ public class GeoserverActivity extends AppCompatActivity {
                     TextView text2 = (TextView) view.findViewById(android.R.id.text2)
                     text1.setText(l.name ? l.name : l.title)
                     text2.setText(l.title)
+                    text1.setTypeface(null, Typeface.BOLD)
+                    text2.setTypeface(null, Typeface.ITALIC)
                     return view
                 }
             }

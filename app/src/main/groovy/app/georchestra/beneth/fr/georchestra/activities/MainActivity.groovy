@@ -5,16 +5,12 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AppCompatActivity
-import android.view.ContextMenu
-import android.view.ContextMenu.ContextMenuInfo
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
-import android.widget.Button
 import android.widget.ListView
 import android.widget.Toast
-import app.georchestra.beneth.fr.georchestra.BuildConfig
 import app.georchestra.beneth.fr.georchestra.R
 import app.georchestra.beneth.fr.georchestra.holders.GeorInstanceHolder
 import app.georchestra.beneth.fr.georchestra.tasks.RetrieveGeorInstancesTask
@@ -50,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         mv.setTileSource(TileSourceFactory.CYCLEMAP)
         mv.setMultiTouchControls(true)
         mv.getController().setZoom(3)
+        mv.getController().setCenter(new GeoPoint(0.0, 0.0))
         this.findViewById(R.id.ProgressBar).setVisibility(View.VISIBLE)
         georInstancesTask.execute()
     }
@@ -109,7 +106,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showHelp() {
-
+        Intent about = new Intent(getApplicationContext(),
+                AboutActivity.class)
+        startActivityForResult(about, RESULT_OK)
     }
 
     private void toggleMode(MenuItem item) {

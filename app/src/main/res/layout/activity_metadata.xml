@@ -116,4 +116,11 @@
 
         </LinearLayout>
     </ScrollView>
+    <ProgressBar
+        style="@android:style/Widget.ProgressBar.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:indeterminate="false"
+        android:layout_centerInParent="true" />
 </RelativeLayout>

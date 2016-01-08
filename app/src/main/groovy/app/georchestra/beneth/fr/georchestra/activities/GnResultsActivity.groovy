@@ -1,6 +1,6 @@
 package app.georchestra.beneth.fr.georchestra.activities
 
-import android.graphics.drawable.ColorDrawable;
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -75,8 +75,13 @@ public class GnResultsActivity extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                def oldColor = ((ColorDrawable) view.getBackground()).getColor()
-                view.setBackgroundColor(android.R.drawable.list_selector_background)
+                Bundle extras = getIntent().getExtras()
+                def georInstanceId = extras.getInt("GeorInstance.id")
+                def md = gnQuery.metadatas.get(position)
+                Intent mdIntent = new Intent(getApplicationContext(), MetadataActivity.class)
+                mdIntent.putExtra("md.uuid", md.fileIdentifier)
+                mdIntent.putExtra("GeorInstance.id", georInstanceId)
+                startActivityForResult(mdIntent, RESULT_OK)
             }
         })
     }

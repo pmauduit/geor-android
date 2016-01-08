@@ -40,7 +40,7 @@
         </activity>
         <activity
             android:name=".activities.MetadataActivity"
-            android:label="Layer Metadata"
+            android:label="Metadata"
             android:parentActivityName=".activities.InstanceActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

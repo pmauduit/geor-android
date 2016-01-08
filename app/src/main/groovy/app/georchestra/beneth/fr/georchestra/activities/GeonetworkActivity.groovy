@@ -35,7 +35,6 @@ public class GeonetworkActivity extends AppCompatActivity {
         dateToRow.setVisibility(View.GONE)
 
         // Organism view
-
         def ov = (ListView) this.findViewById(R.id.organisationsView)
         ArrayAdapter<GeoNetworkSource> arrayAdapter = new ArrayAdapter<GeoNetworkSource>(
                 this, android.R.layout.simple_list_item_1, gnSources) {
@@ -168,7 +167,7 @@ public class GeonetworkActivity extends AppCompatActivity {
     }
 
     void discard() {
-        Toast.makeText(this, "Error occured while loading cuurent catalogue",
+        Toast.makeText(this, "Error occured while loading current catalogue",
                 Toast.LENGTH_LONG).show()
         finish()
     }
@@ -207,7 +206,9 @@ public class GeonetworkActivity extends AppCompatActivity {
     void notifyGeonetworkResults(GeoNetworkQuery geoNetworkQuery) {
         this.findViewById(R.id.progressBar).setVisibility(View.GONE)
         if (geoNetworkQuery) {
+            def extras = getIntent().getExtras()
             Intent gnra = new Intent(getApplicationContext(), GnResultsActivity.class)
+            gnra.putExtra("GeorInstance.id", extras.getInt("GeorInstance.id"))
             startActivityForResult(gnra, RESULT_OK)
         }
 

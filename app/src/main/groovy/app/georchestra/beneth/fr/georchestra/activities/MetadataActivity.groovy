@@ -27,6 +27,8 @@ public class MetadataActivity extends AppCompatActivity {
     private Layer layer
     public MetadataActivity() {}
 
+    private RetrieveMetadataTask mdrt = null
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState)
@@ -40,21 +42,38 @@ public class MetadataActivity extends AppCompatActivity {
 
         Capabilities wmsCap = WmsCapabilitiesHolder.getInstance().getWmsCapabilities()
         String layerName = extras.getString("GeorInstance.layer_name")
-        layer = wmsCap.findLayerByName(layerName)
 
-        def mdUuid = GnUtils.guessMetadataUuid(layer.metadataUrls)
+        def mdUuid = null
+        if (layerName == null)  {
+            String mdUuidIntent = extras.getString("md.uuid")
+            if (mdUuidIntent != null) {
+                mdUuid = mdUuidIntent
+            } else {
+                finish()
+            }
+        }
+        else {
+            layer = wmsCap.findLayerByName(layerName)
+            mdUuid = GnUtils.guessMetadataUuid(layer.metadataUrls)
+        }
+
         if (mdUuid != null) {
-            def mdrt = new RetrieveMetadataTask(this)
+            mdrt = new RetrieveMetadataTask(this)
             mdrt.execute(ist.url - ~/(mapfishapp|carto)\// +
                     "/geonetwork/srv/eng/xml.metadata.get?uuid=${mdUuid}")
         } else {
             Toast.makeText(this, "Unable to find the metadata UUID !",Toast.LENGTH_LONG).show()
+            finish()
         }
     }
 
     public void updateInterface(Metadata m) {
-        if (m == null)
+        if ((m == null) || (mdrt != null) && (mdrt.error != null)) {
+            Toast.makeText(this, "Error occured while loading metadata",Toast.LENGTH_LONG).show()
+            finish()
             return
+        }
+        this.findViewById(R.id.progressBar).setVisibility(View.GONE)
         ((TextView) this.findViewById(R.id.title)).setText(m.title)
         ((TextView) this.findViewById(R.id._abstract)).setText(m._abstract)
 

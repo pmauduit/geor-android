@@ -2,11 +2,13 @@ package app.georchestra.beneth.fr.georchestra.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.ContextMenu
 import android.view.ContextMenu.ContextMenuInfo
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Button
@@ -25,16 +27,13 @@ import org.osmdroid.views.overlay.ItemizedIconOverlay
 import org.osmdroid.views.overlay.OverlayItem
 
 public class MainActivity extends AppCompatActivity {
-
     RetrieveGeorInstancesTask georInstancesTask = new RetrieveGeorInstancesTask(this)
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setTitle("List of geOrchestra instances")
+        setTitle("geOrchestra instances")
         ListView lv = (ListView) this.findViewById(R.id.wxsServersListView)
-
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -47,32 +46,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(georInstanceIntent, RESULT_OK)
             }
         })
-
-        Button sw = (Button) this.findViewById(R.id.switchMapButton)
         MapView mv = (MapView) this.findViewById(R.id.mapView)
         mv.setTileSource(TileSourceFactory.CYCLEMAP)
         mv.setMultiTouchControls(true)
         mv.getController().setZoom(3)
-        sw.setOnClickListener(new View.OnClickListener() {
-            @Override
-            void onClick(View v) {
-                if (mv.getVisibility() == View.GONE) {
-                    lv.setVisibility(View.GONE)
-                    mv.setVisibility(View.VISIBLE)
-                    sw.setText("Switch to list view")
-                } else {
-                    mv.setVisibility(View.GONE)
-                    lv.setVisibility(View.VISIBLE)
-                    sw.setText(new Date(BuildConfig.TIMESTAMP).toString())
-                }
-            }
-        })
         this.findViewById(R.id.ProgressBar).setVisibility(View.VISIBLE)
         georInstancesTask.execute()
     }
     public void updateMapData(ArrayList<Instance> georInstances) {
         def mv = (MapView) this.findViewById(R.id.mapView)
-        def mctrl = mv.getController()
         def items = new ArrayList<OverlayItem>()
         georInstances.each {
             if (it.lat == 0.0 && it.lon == 0.0) {
@@ -89,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
                     @Override
                     public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
-                        Toast.makeText(getApplicationContext(), "tapped on ${item.title}, "+
+                        Toast.makeText(getApplicationContext(), "tapped on ${item.title}, " +
                                 "long-tap to select this geOrchestra instance",
                                 Toast.LENGTH_SHORT).show()
                         return true
@@ -104,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
                         startActivityForResult(georInstanceIntent, RESULT_OK)
                     }
                 }, mrp)
-
         mv.getOverlays().add(georInstancesOverlay)
         mv.invalidate()
     }
@@ -113,7 +94,39 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main, menu)
         return true
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_toggle_mode:
+                toggleMode(item)
+                return true
+            case R.id.action_help:
+                showHelp()
+                return true
+            default:
+                return super.onOptionsItemSelected(item)
+        }
+    }
 
+    private void showHelp() {
+
+    }
+
+    private void toggleMode(MenuItem item) {
+        def mv = (MapView) this.findViewById(R.id.mapView)
+        ListView lv = (ListView) this.findViewById(R.id.wxsServersListView)
+        if (mv.getVisibility() == View.GONE) {
+            lv.setVisibility(View.GONE)
+            mv.setVisibility(View.VISIBLE)
+            item.setIcon(ContextCompat.getDrawable(getApplicationContext(),
+                    android.R.drawable.ic_menu_sort_by_size))
+        } else {
+            mv.setVisibility(View.GONE)
+            lv.setVisibility(View.VISIBLE)
+            item.setIcon(ContextCompat.getDrawable(getApplicationContext(),
+                    android.R.drawable.ic_menu_mapmode))
+        }
+    }
 }
 
 

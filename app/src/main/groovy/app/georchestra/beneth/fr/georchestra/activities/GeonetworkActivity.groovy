@@ -167,13 +167,20 @@ public class GeonetworkActivity extends AppCompatActivity {
 
     }
 
+    void discard() {
+        Toast.makeText(this, "Error occured while loading cuurent catalogue",
+                Toast.LENGTH_LONG).show()
+        finish()
+    }
+
     void updateView(List<GeoNetworkSource> geoNetworkSources,
                     List<String> resources) {
-        if (gnSources != null)
+        if (geoNetworkSources != null) {
             gnSources = geoNetworkSources.clone()
-        if (typeOfResources != null)
+        }
+        if (resources != null) {
             typeOfResources = resources.clone()
-
+        }
         def ov = (ListView) this.findViewById(R.id.organisationsView)
         def tv = (ListView) this.findViewById(R.id.typeView)
 

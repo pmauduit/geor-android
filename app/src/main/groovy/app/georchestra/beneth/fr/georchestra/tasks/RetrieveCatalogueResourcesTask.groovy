@@ -35,8 +35,10 @@ public class RetrieveCatalogueResourcesTask extends AsyncTask<Object, Void, Obje
 
     @Override
     protected void onPostExecute(Object result) {
-        if (result == null)
+        if ((result == null) || (result[0] == null) || (result[1] == null)) {
+            activity.discard()
             return
+        }
         activity.updateView((List<GeoNetworkSource>) result[0],
                 (List<String>) result[1])
     }

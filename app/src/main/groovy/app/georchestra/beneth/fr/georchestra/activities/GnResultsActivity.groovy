@@ -1,10 +1,12 @@
-package app.georchestra.beneth.fr.georchestra.activities;
+package app.georchestra.beneth.fr.georchestra.activities
 
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.ListView
@@ -70,6 +72,13 @@ public class GnResultsActivity extends AppCompatActivity {
             }
         }
         lv.setAdapter(mdAdapter)
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                def oldColor = ((ColorDrawable) view.getBackground()).getColor()
+                view.setBackgroundColor(android.R.drawable.list_selector_background)
+            }
+        })
     }
 
     @Override

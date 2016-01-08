@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">geOrchestra</string>
     <string name="title_activity_layer_info">LayerInfoActivity</string>
+    <string name="title_activity_about">AboutActivity</string>
 </resources>

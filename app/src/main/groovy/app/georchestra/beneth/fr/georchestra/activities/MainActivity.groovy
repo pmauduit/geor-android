@@ -24,6 +24,7 @@ import org.osmdroid.views.overlay.OverlayItem
 
 public class MainActivity extends AppCompatActivity {
     RetrieveGeorInstancesTask georInstancesTask = new RetrieveGeorInstancesTask(this)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState)
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         this.findViewById(R.id.ProgressBar).setVisibility(View.VISIBLE)
         georInstancesTask.execute()
     }
+
     public void updateMapData(ArrayList<Instance> georInstances) {
         def mv = (MapView) this.findViewById(R.id.mapView)
         def items = new ArrayList<OverlayItem>()

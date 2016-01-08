@@ -1,5 +1,6 @@
 package app.georchestra.beneth.fr.georchestra.tasks
 
+import android.graphics.Typeface
 import android.os.AsyncTask
 import android.view.View
 import android.view.ViewGroup;
@@ -44,7 +45,8 @@ class RetrieveGeorInstancesTask extends AsyncTask<Object, Void, Object> {
 
         activity.findViewById(R.id.ProgressBar).setVisibility(View.GONE)
 
-        def aa = new ArrayAdapter(activity, android.R.layout.simple_list_item_2, android.R.id.text1, geOrInstances) {
+        def aa = new ArrayAdapter(activity, android.R.layout.simple_list_item_2,
+                android.R.id.text1, geOrInstances) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent)
@@ -52,6 +54,9 @@ class RetrieveGeorInstancesTask extends AsyncTask<Object, Void, Object> {
                 TextView text2 = (TextView) view.findViewById(android.R.id.text2)
                 text1.setText(geOrInstances.get(position).title)
                 text2.setText(geOrInstances.get(position).url)
+                text1.setTypeface(null, Typeface.BOLD)
+                text2.setTypeface(null, Typeface.ITALIC)
+
                 return view
             }
         }

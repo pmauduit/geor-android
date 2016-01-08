@@ -4,11 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AppCompatActivity
+import android.view.ContextMenu
+import android.view.ContextMenu.ContextMenuInfo
+import android.view.Menu
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Button
 import android.widget.ListView
 import android.widget.Toast
+import app.georchestra.beneth.fr.georchestra.BuildConfig
 import app.georchestra.beneth.fr.georchestra.R
 import app.georchestra.beneth.fr.georchestra.holders.GeorInstanceHolder
 import app.georchestra.beneth.fr.georchestra.tasks.RetrieveGeorInstancesTask
@@ -26,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
         setTitle("List of geOrchestra instances")
         ListView lv = (ListView) this.findViewById(R.id.wxsServersListView)
 
@@ -59,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     mv.setVisibility(View.GONE)
                     lv.setVisibility(View.VISIBLE)
-                    sw.setText("Switch to map view")
+                    sw.setText(new Date(BuildConfig.TIMESTAMP).toString())
                 }
             }
         })
@@ -103,6 +107,11 @@ public class MainActivity extends AppCompatActivity {
 
         mv.getOverlays().add(georInstancesOverlay)
         mv.invalidate()
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu)
+        return true
     }
 
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_instasnce_menu"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        app:showAsAction="always">
+        <menu>
+            <item android:id="@+id/action_gs"
+                app:showAsAction="always"
+                android:icon="@mipmap/gs"
+                android:title="Public layers" />
+
+            <item android:id="@+id/action_gn"
+                app:showAsAction="always"
+                android:icon="@mipmap/gn"
+                android:title="Catalogue" />
+        </menu>
+    </item>
+</menu>

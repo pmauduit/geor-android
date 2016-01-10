@@ -3,6 +3,7 @@ package app.georchestra.beneth.fr.georchestra.activities
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.CheckBox
@@ -22,8 +23,7 @@ public class InstanceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_instance)
         Bundle extras = getIntent().getExtras()
 
-        if ((GeorInstanceHolder.getInstance().getGeorInstances() == null)
-            || (! extras)) {
+        if ((GeorInstanceHolder.getInstance().getGeorInstances() == null) || (! extras)) {
             this.finish()
         }
 
@@ -39,8 +39,6 @@ public class InstanceActivity extends AppCompatActivity {
         }
 
         // Filling up the html desc of the instance
-        def tv = (TextView) this.findViewById(R.id.titleText)
-        tv.setText(currentInst.title)
         def uv = (TextView) this.findViewById(R.id.urlText)
         uv.setText(currentInst.url)
         def av = (TextView) this.findViewById(R.id.abstractText)
@@ -50,32 +48,18 @@ public class InstanceActivity extends AppCompatActivity {
         def pubcb = (CheckBox) this.findViewById(R.id.publicCheckBox)
         pubcb.setChecked(currentInst.isPublic)
 
-        // Hook for GeoServer button
-        this.findViewById(R.id.gsButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            void onClick(View v) {
-                Intent gsActivity = new Intent(getApplicationContext(), GeoserverActivity.class)
-                gsActivity.putExtra("GeorInstance.id", georInstanceId)
-                startActivityForResult(gsActivity, RESULT_OK)
-            }
-        })
-        // Hook for GeoNetwork button
-        this.findViewById(R.id.gnButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            void onClick(View v) {
-                Intent gnActivity = new Intent(getApplicationContext(), GeonetworkActivity.class)
-                gnActivity.putExtra("GeorInstance.id", georInstanceId)
-                startActivityForResult(gnActivity, RESULT_OK)
-            }
-        })
-        // Hook for viewer button
-        this.findViewById(R.id.viewerButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "not implemented yet !",
-                        Toast.LENGTH_LONG).show()
-            }
-        })
+//        def lv = (ExpandableListView) findViewById(R.id.lastChangedView)
+//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+//                this,
+//                android.R.layout.simple_list_item_1,
+//                ["aaaaa", "bbbbbbbbbbb", "cccccc", "dddddddddd", "e",
+//                "fffff", "gggggg"])
+//        lv.setAdapter(arrayAdapter)
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.instance, menu)
+        return true
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -83,7 +67,21 @@ public class InstanceActivity extends AppCompatActivity {
             case android.R.id.home:
                 this.finish()
                 return true
+            case R.id.action_gs:
+                openActivity(GeoserverActivity.class)
+                break
+            case R.id.action_gn:
+                openActivity(GeonetworkActivity.class)
+                break
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private void openActivity(Class activity) {
+        Bundle extras = getIntent().getExtras()
+        def georInstanceId = extras.getInt("GeorInstance.id")
+        Intent gsActivity = new Intent(getApplicationContext(), activity)
+        gsActivity.putExtra("GeorInstance.id", georInstanceId)
+        startActivityForResult(gsActivity, RESULT_OK)
     }
 }

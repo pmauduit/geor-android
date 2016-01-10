@@ -9,172 +9,64 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".activities.InstanceActivity">
 
-
-    <ScrollView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollView2" >
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/LogoView"
+            android:layout_gravity="center"
+            android:contentDescription="instance logo" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/titleText" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/urlText"
+            android:textStyle="italic" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/abstractText"
+            android:layout_height="wrap_content" />
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:orientation="vertical"
+            <CheckBox
                 android:layout_width="wrap_content"
-                android:weightSum="3"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/LogoView"
-                    android:layout_gravity="center"
-                    android:contentDescription="instance logo" />
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:clickable="true"
-                    android:id="@+id/gsButton"
-                    style="@android:style/Widget.Button"
-                    android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:text="in production"
+                android:id="@+id/productionCheckBox"
+                android:checked="false"
+                android:enabled="false"
+                android:layout_weight="1"
+                android:layout_gravity="left" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/imageView"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentStart="true"
-                        android:background="@mipmap/gs" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="GeoServer"
-                        android:id="@+id/gsCaption"
-                        android:layout_alignParentTop="false"
-                        android:layout_alignParentEnd="false"
-                        android:gravity="center"
-                        style="@style/Base.TextAppearance.AppCompat.Button"
-                        android:layout_alignParentStart="false"
-                        android:layout_alignWithParentIfMissing="false"
-                        android:layout_centerInParent="true" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:clickable="true"
-                    android:id="@+id/gnButton"
-                    style="@android:style/Widget.Button"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/imageView2"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentStart="true"
-                        android:background="@mipmap/gn" />
-
-                    <TextView
-                        style="@style/Base.TextAppearance.AppCompat.Button"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Catalogue"
-                        android:id="@+id/textView2"
-                        android:layout_alignParentTop="false"
-                        android:layout_alignParentEnd="true"
-                        android:layout_toEndOf="@+id/imageView2"
-                        android:gravity="center"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerInParent="true" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:clickable="true"
-                    android:id="@+id/viewerButton"
-                    style="@android:style/Widget.Button"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        style="@style/Base.TextAppearance.AppCompat.Button"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Viewer Contexts"
-                        android:id="@+id/textView5"
-                        android:gravity="center"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true" />
-                </RelativeLayout>
-
-            </LinearLayout>
-
-
-
-            <LinearLayout
-                android:orientation="vertical"
+            <CheckBox
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <TableRow
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:id="@+id/titleText"
-                        android:layout_column="0" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:id="@+id/urlText"
-                        android:layout_column="0"
-                        android:textStyle="italic" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:layout_column="0"
-                        android:id="@+id/abstractText" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <CheckBox
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="public"
-                        android:id="@+id/publicCheckBox"
-                        android:checked="false"
-                        android:enabled="false" />
-
-                    <CheckBox
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="in production"
-                        android:id="@+id/productionCheckBox"
-                        android:checked="false"
-                        android:enabled="false" />
-                </TableRow>
-
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:text="public"
+                android:id="@+id/publicCheckBox"
+                android:checked="false"
+                android:enabled="false"
+                android:layout_weight="1"
+                android:layout_gravity="right" />
         </LinearLayout>
-    </ScrollView>
+
+
+    </LinearLayout>
 
 </RelativeLayout>

@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="geOrchestra is a free, modular and interoperable Spatial Data Infrastructure software born in 2009 to meet the requirements of the INSPIRE directive in Europe.\n\nThis is a user-contributed mobile application which consumes the data published by the different public geOrchestra instances.\n\nIn the same way as geOrchestra, the source code of this application is available on github, at the following address:\n\nhttps://github.com/pmauduit/geor-android\n"
+        android:text="geOrchestra is a free, modular and interoperable Spatial Data Infrastructure software born in 2009 to meet the requirements of the INSPIRE directive in Europe.\n\nThis is a user-contributed mobile application which consumes the data published by the different public geOrchestra instances.\n\nThe source code of this application is available on github under the same terms as geOrchestra itself, at the following address:\n\nhttps://github.com/pmauduit/geor-android\n\n"
         android:id="@+id/textView8"
         android:layout_below="@+id/imageView3"
         android:layout_alignParentStart="true" />

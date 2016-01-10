@@ -14,59 +14,101 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/LogoView"
-            android:layout_gravity="center"
-            android:contentDescription="instance logo" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:id="@+id/titleText" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/urlText"
-            android:textStyle="italic" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:id="@+id/abstractText"
-            android:layout_height="wrap_content" />
-
+        <!-- general info about the instance -->
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout"
+            android:showDividers="end">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/scrollView5">
+
+                <LinearLayout
+                    android:orientation="vertical"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/LogoView"
+                        android:layout_gravity="center"
+                        android:contentDescription="instance logo" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:id="@+id/titleText" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:id="@+id/urlText"
+                        android:textStyle="italic" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:id="@+id/abstractText"
+                        android:layout_height="wrap_content" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal">
+
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="in production"
+                            android:id="@+id/productionCheckBox"
+                            android:checked="false"
+                            android:enabled="false" />
+
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="public"
+                            android:id="@+id/publicCheckBox"
+                            android:checked="false"
+                            android:enabled="false"
+                            android:layout_gravity="right" />
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+        <!-- last modified datasets -->
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/lastModifiedLayout">
 
-            <CheckBox
-                android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="in production"
-                android:id="@+id/productionCheckBox"
-                android:checked="false"
-                android:enabled="false"
-                android:layout_weight="1"
-                android:layout_gravity="left" />
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Last modified datasets:"
+                android:id="@+id/lastModifiedTitle" />
 
-            <CheckBox
+            <ListView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="public"
-                android:id="@+id/publicCheckBox"
-                android:checked="false"
-                android:enabled="false"
-                android:layout_weight="1"
-                android:layout_gravity="right" />
+                android:layout_height="181dp"
+                android:id="@+id/lastModifiedList" />
         </LinearLayout>
 
 
     </LinearLayout>
+
 
 </RelativeLayout>

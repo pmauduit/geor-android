@@ -31,5 +31,8 @@ public class GnUtils {
         ret = ret -~ /(mapfishapp|carto)\//
         return ret
     }
+    public static getCswUrl(String instanceUrl) {
+        return "${GnUtils.getGeonetworkUrl(instanceUrl)}srv/eng/csw"
+    }
 }
 

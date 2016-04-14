@@ -40,7 +40,7 @@ public class RetrieveLastModifiedDatasetsTask extends AsyncTask<Object, Void, Ge
             Response response = client.newCall(request).execute()
             getRecords = GetRecords.getAllMetadatasFromDocument(response.body().string())
             return getRecords
-        } catch (Exception e) {
+        } catch (Throwable e) {
             error = e
         }
         return null

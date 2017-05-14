@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'groovyx.grooid.groovy-android'
+apply plugin: 'groovyx.android'
 
 apply plugin: 'jacoco'
 
@@ -32,7 +32,7 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ["compileDebugSources"]) {
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "app.georchestra.beneth.fr.georchestra"
@@ -59,6 +59,7 @@ android {
       exclude 'META-INF/LICENSE'
       exclude 'META-INF/NOTICE'
       exclude 'META-INF/NOTICE.txt'
+      exclude 'META-INF/groovy-release-info.properties'
     }
     sourceSets {
       main {
@@ -79,15 +80,15 @@ android {
 }
 repositories {
     maven {
-        url 'http://download.qualitystreetmap.org/maven/'
+        url 'https://java.spironet.fr/maven/'
     }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'org.codehaus.groovy:groovy:2.4.5:grooid'
-    compile('org.codehaus.groovy:groovy-xml:2.4.5') {
+    compile 'org.codehaus.groovy:groovy:2.4.10:grooid'
+    compile('org.codehaus.groovy:groovy-xml:2.4.10') {
         exclude group: 'org.codehaus.groovy', module: 'groovy'
     }
     compile('fr.beneth:wxslib:1.1-SNAPSHOT') {
@@ -97,7 +98,7 @@ dependencies {
 
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.android.support:design:23.1.0'
-    compile 'org.osmdroid:osmdroid-android:4.3'
+    compile 'org.osmdroid:osmdroid-android:5.6.4'
     compile 'org.slf4j:slf4j-simple:1.6.1'
     compile 'com.squareup.okhttp3:okhttp:3.0.0-RC1'
 }

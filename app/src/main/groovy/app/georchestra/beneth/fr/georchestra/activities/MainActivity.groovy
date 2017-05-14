@@ -14,12 +14,13 @@ import android.widget.Toast
 import app.georchestra.beneth.fr.georchestra.R
 import app.georchestra.beneth.fr.georchestra.holders.GeorInstanceHolder
 import app.georchestra.beneth.fr.georchestra.tasks.RetrieveGeorInstancesTask
+import app.georchestra.beneth.fr.georchestra.utils.StamenTileSource
 import fr.beneth.wxslib.georchestra.Instance
-import org.osmdroid.DefaultResourceProxyImpl
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.ItemizedIconOverlay
+import org.osmdroid.views.overlay.ItemizedOverlayWithFocus
 import org.osmdroid.views.overlay.OverlayItem
 
 public class MainActivity extends AppCompatActivity {
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             }
         })
         MapView mv = (MapView) this.findViewById(R.id.mapView)
-        mv.setTileSource(TileSourceFactory.CYCLEMAP)
+        mv.setTileSource(TileSourceFactory.MAPNIK)
         mv.setMultiTouchControls(true)
         mv.getController().setZoom(3)
         mv.getController().setCenter(new GeoPoint(0.0, 0.0))
@@ -65,8 +66,8 @@ public class MainActivity extends AppCompatActivity {
             olItem.setMarker(gMarker)
             items << olItem
         }
-        def mrp = new DefaultResourceProxyImpl(getApplicationContext())
-        def georInstancesOverlay = new ItemizedIconOverlay<OverlayItem>(items,
+        def georInstancesOverlay = new ItemizedIconOverlay<OverlayItem>(
+                items,
                 new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
                     @Override
                     public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
@@ -84,7 +85,8 @@ public class MainActivity extends AppCompatActivity {
                         georInstanceIntent.putExtra("GeorInstance.id", index)
                         startActivityForResult(georInstanceIntent, RESULT_OK)
                     }
-                }, mrp)
+                }, this)
+
         mv.getOverlays().add(georInstancesOverlay)
         mv.invalidate()
     }

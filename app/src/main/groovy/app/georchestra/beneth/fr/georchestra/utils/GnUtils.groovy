@@ -9,10 +9,17 @@ public class GnUtils {
 
     public static String guessMetadataUuid(ArrayList<MetadataUrl> mdUrls) {
         for (def mdUrl : mdUrls) {
-            def pat = mdUrl.url =~ /.*geonetwork.*[uuid|id]=([^&]*)/
-            if (pat.matches()) {
-                return pat[0][1]
+            def guessed = GnUtils.guessMetadataUuid(mdUrl.url)
+            if (guessed != null) {
+                return guessed
             }
+        }
+        return null
+    }
+    public static String guessMetadataUuid(String mdUrl) {
+        def pat = mdUrl =~ /.*geonetwork.*[uuid|id]=([^&]*)/
+        if (pat.matches()) {
+            return pat[0][1]
         }
         return null
     }

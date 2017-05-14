@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             }
         })
         MapView mv = (MapView) this.findViewById(R.id.mapView)
-        mv.setTileSource(TileSourceFactory.MAPNIK)
+        mv.setTileSource(StamenTileSource.StamenTonerTileSource)
         mv.setMultiTouchControls(true)
         mv.getController().setZoom(3)
         mv.getController().setCenter(new GeoPoint(0.0, 0.0))
